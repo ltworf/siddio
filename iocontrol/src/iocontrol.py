@@ -25,7 +25,9 @@ def get_devices(filename='/etc/siddio-iocontrol.conf'):
     Loads the configuration and returns a list of tuples in
     the form of (pin, initial_state, description).
     '''
+    if hasattr(get_devices, 'conf'):
+        return getattr(get_devices,'conf')
 
     config = ConfigObj(filename)
-    return [(int(i['pin']),bool(i['default']), i['description']) for i in config.values()]
-
+    setattr(get_devices, 'conf', [(int(i['pin']),bool(i['default']), i['description']) for i in config.values()])
+    return getattr(get_devices,'conf')
