@@ -18,6 +18,7 @@
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 from configobj import ConfigObj
+import RPi.GPIO as GPIO
 
 
 def get_devices(filename='/etc/siddio-iocontrol.conf'):
@@ -31,3 +32,20 @@ def get_devices(filename='/etc/siddio-iocontrol.conf'):
     config = ConfigObj(filename)
     setattr(get_devices, 'conf', [(int(i['pin']),bool(i['default']), i['description']) for i in config.values()])
     return getattr(get_devices,'conf')
+
+
+def main():
+
+    # Initialising the pins
+    GPIO.setmode(GPIO.BCM)
+    for pin, state, _ in get_devices():
+        GPIO.setup(pin, GPIO.OUT)
+        GPIO.output(pin, state)
+
+    #FIXME main loop
+
+    # Restore default state for them
+    GPIO.cleanup()
+
+if __name__ == '__main__':
+    main()
