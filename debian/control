@@ -1,0 +1,7 @@
+Source: siddio
+Priority: optional
+Maintainer: Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>
+
+Package: siddio-iocontrol
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
