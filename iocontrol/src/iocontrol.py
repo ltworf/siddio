@@ -102,13 +102,13 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             fmt = '!B'
             id = struct.unpack(fmt, self.recv(1))[0]
             name = get_devices()[id].name.encode('utf8')
-            fmt = '!%ds' % len(name)
+            fmt = '!%ds' % len(name) + 1
             data = (name, )
         elif command == GETDESCR:
             fmt = '!B'
             id = struct.unpack(fmt, self.recv(1))[0]
             description = get_devices()[id].description.encode('utf8')
-            fmt = '!%ds' % len(description)
+            fmt = '!%ds' % len(description) + 1
             data = (description, )
         self.send(struct.pack(fmt, *data))
 
