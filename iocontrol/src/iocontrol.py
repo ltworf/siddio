@@ -67,8 +67,10 @@ def get_devices(filename='/etc/siddio-iocontrol.conf'):
 
     r = []
     for k,v in config.iteritems():
+        if not k.startswith('Device'):
+            continue
         r.append(Device(
-            k,
+            v['name'],
             v.get('description', ''),
             int(v['pin']),
             bool(int(v.get('default', 0))),
