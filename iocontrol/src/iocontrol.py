@@ -42,9 +42,13 @@ class Device():
 
 
     def set_state(self, state: bool):
+        self.state = state
         if self.invert:
             state = not state
         GPIO.output(self.pin, state)
+
+    def get_state(self):
+        return self.state
 
 
 
@@ -81,7 +85,12 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             print(id, state)
             get_devices()[id].set_state(bool(state))
             self.send(b'ok')
-
+        elif command == GETSTATE:
+            fmt = '!B'
+            id = struct.unpack(fmt, self.recv(1))[0]
+            state = get_devices()[id].get_state()
+            print(state)
+            self.send(struct.pack(fmt, state))
 
 
 class AsyncServer(asyncore.dispatcher):
