@@ -29,16 +29,18 @@ GETSTATE = b'g'
 GETCOUNT = b'c'
 GETNAME = b'n'
 GETDESCR = b'd'
+GETTAGS = b't'
 
 
 
 class Device():
-    def __init__(self, name: str, description: str, pin: int, state: bool, invert: bool):
+    def __init__(self, name: str, description: str, tags: str, pin: int, state: bool, invert: bool):
         self.name = name
         self.description = description
         self.pin = pin
         self.state = state
         self.invert = invert
+        self.tags = tags
 
         GPIO.setup(pin, GPIO.OUT)
         self.set_state(state)
@@ -72,6 +74,7 @@ def get_devices(filename='/etc/siddio-iocontrol.conf'):
         r.append(Device(
             v['name'],
             v.get('description', ''),
+            v.get('tags', ''),
             int(v['pin']),
             bool(int(v.get('default', 0))),
             bool(int(v.get('invert', 0))),
@@ -82,6 +85,20 @@ def get_devices(filename='/etc/siddio-iocontrol.conf'):
 
 
 class AsyncConnection(asyncore.dispatcher_with_send):
+    def _send_str(self, string):
+        data = string.encode('utf8')
+        fmt = '!%ds' % len(data) + 1
+        self.send(struct.pack(fmt, *data))
+
+    def _read_dev(self) -> Device:
+        '''
+        Reads 1 byte, uses it as index in the device lists
+        and returns the corresponding device
+        '''
+        fmt = '!B'
+        id = struct.unpack(fmt, self.recv(1))[0]
+        return get_devices()[id]
+
     def handle_read(self):
         command = self.recv(1)
         if command == SETSTATE:
@@ -99,17 +116,17 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             fmt = '!B'
             data = (len(get_devices()), )
         elif command == GETNAME:
-            fmt = '!B'
-            id = struct.unpack(fmt, self.recv(1))[0]
-            name = get_devices()[id].name.encode('utf8')
-            fmt = '!%ds' % len(name) + 1
-            data = (name, )
+            name = self._read_dev().name
+            self._send_str(name)
+            return
         elif command == GETDESCR:
-            fmt = '!B'
-            id = struct.unpack(fmt, self.recv(1))[0]
-            description = get_devices()[id].description.encode('utf8')
-            fmt = '!%ds' % len(description) + 1
-            data = (description, )
+            description = self._read_dev().description
+            self._send_str(description)
+            return
+        elif command == GETTAGS:
+            tags = self._read_dev().tags
+            self._send_str(tags)
+            return
         self.send(struct.pack(fmt, *data))
 
 
