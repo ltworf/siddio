@@ -18,9 +18,34 @@
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import asyncore
 import socket
+import struct
 
 from configobj import ConfigObj
 import RPi.GPIO as GPIO
+
+
+SETSTATE = b's'
+GETSTATE = b'g'
+
+
+
+class Device():
+    def __init__(self, name: str, description: str, pin: int, state: bool, invert: bool):
+        self.name = name
+        self.description = description
+        self.pin = pin
+        self.state = state
+        self.invert = invert
+
+        GPIO.setup(pin, GPIO.OUT)
+        self.set_state(state)
+
+
+    def set_state(self, state: bool):
+        if self.invert:
+            state = not state
+        GPIO.output(self.pin, state)
+
 
 
 def get_devices(filename='/etc/siddio-iocontrol.conf'):
@@ -32,13 +57,32 @@ def get_devices(filename='/etc/siddio-iocontrol.conf'):
         return getattr(get_devices,'conf')
 
     config = ConfigObj(filename)
-    setattr(get_devices, 'conf', [(int(i['pin']),bool(int(i['default'])), i['description']) for i in config.values()])
-    return getattr(get_devices,'conf')
+
+    r = []
+    for k,v in config.iteritems():
+        r.append(Device(
+            k,
+            v.get('description', ''),
+            int(v['pin']),
+            bool(int(v.get('default', 0))),
+            bool(int(v.get('invert', 0))),
+        ))
+
+    setattr(get_devices, 'conf', r)
+    return r
 
 
 class AsyncConnection(asyncore.dispatcher_with_send):
     def handle_read(self):
-        pass
+        command = self.recv(1)
+        if command == SETSTATE:
+            fmt = '!BB'
+            id, state = struct.unpack(fmt, self.recv(2))
+            print(id, state)
+            get_devices()[id].set_state(bool(state))
+            self.send(b'ok')
+
+
 
 class AsyncServer(asyncore.dispatcher):
 
@@ -61,9 +105,7 @@ def main():
     try:
         # Initialising the pins
         GPIO.setmode(GPIO.BCM)
-        for pin, state, _ in get_devices():
-            GPIO.setup(pin, GPIO.OUT)
-            GPIO.output(pin, state)
+        get_devices()
 
         server = AsyncServer('0.0.0.0', 4141)
         asyncore.loop()
