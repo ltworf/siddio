@@ -26,6 +26,9 @@ import RPi.GPIO as GPIO
 
 SETSTATE = b's'
 GETSTATE = b'g'
+GETCOUNT = b'c'
+GETNAME = b'n'
+GETDESCR = b'd'
 
 
 
@@ -85,12 +88,27 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             print(id, state)
             get_devices()[id].set_state(bool(state))
             self.send(b'ok')
+            return
         elif command == GETSTATE:
             fmt = '!B'
             id = struct.unpack(fmt, self.recv(1))[0]
-            state = get_devices()[id].get_state()
-            print(state)
-            self.send(struct.pack(fmt, state))
+            data = (get_devices()[id].get_state(),)
+        elif command == GETCOUNT:
+            fmt = '!B'
+            data = (len(get_devices()), )
+        elif command == GETNAME:
+            fmt = '!B'
+            id = struct.unpack(fmt, self.recv(1))[0]
+            name = get_devices()[id].name.encode('utf8')
+            fmt = '!%ds' % len(name)
+            data = (name, )
+        elif command == GETDESCR:
+            fmt = '!B'
+            id = struct.unpack(fmt, self.recv(1))[0]
+            description = get_devices()[id].description.encode('utf8')
+            fmt = '!%ds' % len(description)
+            data = (description, )
+        self.send(struct.pack(fmt, *data))
 
 
 class AsyncServer(asyncore.dispatcher):
