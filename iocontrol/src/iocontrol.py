@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+import asyncore
+import socket
 
 from configobj import ConfigObj
 import RPi.GPIO as GPIO
@@ -30,22 +32,45 @@ def get_devices(filename='/etc/siddio-iocontrol.conf'):
         return getattr(get_devices,'conf')
 
     config = ConfigObj(filename)
-    setattr(get_devices, 'conf', [(int(i['pin']),bool(i['default']), i['description']) for i in config.values()])
+    setattr(get_devices, 'conf', [(int(i['pin']),bool(int(i['default'])), i['description']) for i in config.values()])
     return getattr(get_devices,'conf')
+
+
+class AsyncConnection(asyncore.dispatcher_with_send):
+    def handle_read(self):
+        pass
+
+class AsyncServer(asyncore.dispatcher):
+
+    def __init__(self, host, port):
+        asyncore.dispatcher.__init__(self)
+        self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.set_reuse_addr()
+        self.bind((host, port))
+        self.listen(5)
+
+    def handle_accept(self):
+        pair = self.accept()
+        if pair:
+            sock, addr = pair
+            connection = AsyncConnection(sock)
 
 
 def main():
 
-    # Initialising the pins
-    GPIO.setmode(GPIO.BCM)
-    for pin, state, _ in get_devices():
-        GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, state)
+    try:
+        # Initialising the pins
+        GPIO.setmode(GPIO.BCM)
+        for pin, state, _ in get_devices():
+            GPIO.setup(pin, GPIO.OUT)
+            GPIO.output(pin, state)
 
-    #FIXME main loop
+        server = AsyncServer('0.0.0.0', 4141)
+        asyncore.loop()
+    finally:
+        # Restore default state for them
+        GPIO.cleanup()
 
-    # Restore default state for them
-    GPIO.cleanup()
 
 if __name__ == '__main__':
     main()
