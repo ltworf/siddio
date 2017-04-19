@@ -87,8 +87,7 @@ def get_devices(filename='/etc/siddio-iocontrol.conf'):
 class AsyncConnection(asyncore.dispatcher_with_send):
     def _send_str(self, string):
         data = string.encode('utf8')
-        fmt = '!%ds' % len(data) + 1
-        self.send(struct.pack(fmt, *data))
+        self.send(data + b'\0')
 
     def _read_dev(self) -> Device:
         '''
@@ -125,7 +124,7 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             return
         elif command == GETTAGS:
             tags = self._read_dev().tags
-            self._send_str(tags)
+            self._send_str(','.join(tags))
             return
         self.send(struct.pack(fmt, *data))
 
