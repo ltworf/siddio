@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+import collections
 
 from relational.relation import Relation, Header
 from relational.parser import parse
@@ -35,12 +36,13 @@ def get_relations():
 
     native_properties = set(devices.Device._fields)
     properties = set(devices.Device._fields)
-
-    dev_rel = Relation()
-
-    # Set the properties that devices have
+    for dev in devs:
+        properties.update(set(dev.properties.keys()))
     properties.difference_update({'tags'})
     properties.update({'state', 'id'})
+
+    # Set the properties that devices have
+    dev_rel = Relation()
     dev_rel.header = Header(properties)
 
     dev_dic = {}
@@ -48,7 +50,7 @@ def get_relations():
     # Add the devices inside the relation
     for dev in devs:
         # Create the tuple for the device
-        dev_dic[id(dev)] = dev
+        dev_dic[str(id(dev))] = dev
         attrs = []
         for prop in dev_rel.header:
             if prop == 'tags':
@@ -73,3 +75,28 @@ def get_relations():
             tag_rel.insert((id(dev), tag))
 
     return dev_rel, tag_rel, dev_dic
+
+
+def execute(query: str, context: dict, dev_dic: dict, state: bool):
+    '''
+    Executes a query and sets the devices accordingly
+
+    query: the relational algebra query
+    contest: the context for the query (a dictionary where the keys are names and values are relations)
+    dev_dic: a dictionary where the key is the id and the value is the device object
+    state: the desired state for the devices matching the query
+    '''
+    expr = parse(query)
+    devs = expr(context)
+    id_index = devs.header.index('id')
+    for dev in devs:
+        print(dev, state)
+        dev_dic[dev[id_index]].switch(state)
+
+
+class Profile(collections.namedtuple('profile', ('name', 'onquery', 'offquery'))):
+    def activate(self):
+        rels,tags,dic=get_relations()
+        context={'devices': rels, 'tags': tags}
+        execute(self.offquery, context, dic, False)
+        execute(self.onquery, context, dic, True)
