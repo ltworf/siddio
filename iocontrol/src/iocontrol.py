@@ -34,12 +34,14 @@ GETTAGS = b't'
 
 
 class Device():
-    def __init__(self, name: str, description: str, tags: str, pin: int, state: bool, invert: bool):
+    def __init__(self, name: str, description: str, tags, pin: int, state: bool, invert: bool):
         self.name = name
         self.description = description
         self.pin = pin
         self.state = state
         self.invert = invert
+        if isinstance(tags, str):
+            tags = [tags]
         self.tags = tags
 
         GPIO.setup(pin, GPIO.OUT)
