@@ -61,7 +61,7 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
     def switch(self, new_state: bool):
         if new_state == self.get_state():
             return
-        self.state = new_state
+        self._state = new_state
 
         state = b'\1' if new_state else b'\0'
         s = socket.socket(socket.AF_INET)
