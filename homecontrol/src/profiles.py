@@ -32,14 +32,21 @@ def get_relations():
     dev_dic id: device object
     '''
 
-    devs = devices.devices()
+    # Obtain devices and cache that stuff
+    if not hasattr(get_relations, 'devs'):
+        get_relations.devs = devices.devices()
+        get_relations.native_properties = set(devices.Device._fields)
 
-    native_properties = set(devices.Device._fields)
-    properties = set(devices.Device._fields)
-    for dev in devs:
-        properties.update(set(dev.properties.keys()))
-    properties.difference_update({'tags'})
-    properties.update({'state', 'id'})
+        properties = set(devices.Device._fields)
+        for dev in get_relations.devs:
+            properties.update(set(dev.properties.keys()))
+        properties.difference_update({'tags'})
+        properties.update({'state', 'id'})
+        get_relations.properties = properties
+
+    devs = get_relations.devs
+    native_properties = get_relations.native_properties
+    properties = get_relations.properties
 
     # Set the properties that devices have
     dev_rel = Relation()
