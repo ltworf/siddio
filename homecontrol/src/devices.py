@@ -29,6 +29,17 @@ GETTAGS = b't'
 
 
 class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'host', 'port', 'dev_id'))):
+    def __new__(cls, *args, **kwargs):
+            self = super(Device, cls).__new__(cls, *args, **kwargs)
+
+            # Set keyword properties
+            self.properties = {}
+            for tag in self.tags:
+                components = tag.split(':', 1)
+                if len(components) == 2:
+                    self.properties[components[0]] = components[1]
+            return self
+
     def get_state(self):
         '''
         returns the state of the device.
@@ -59,7 +70,7 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
         s.close()
 
 
-def devices(host: str, port: int):
+def _devices(host: str, port: int):
     r = []
     s = socket.socket(socket.AF_INET)
     s.connect((host, port))
@@ -84,6 +95,10 @@ def devices(host: str, port: int):
     return r
 
 
-if __name__ == '__main__':
-    for device in devices('10.9', 4141):
-        device.switch(False)
+def devices():
+    r = []
+    #TODO read hosts from configuration file
+    hosts = (('10.9', 4141),)
+    for host, port in hosts:
+        r += _devices(host, port)
+    return r
