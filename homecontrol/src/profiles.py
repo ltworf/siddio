@@ -84,26 +84,24 @@ def get_relations():
     return dev_rel, tag_rel, dev_dic
 
 
-def execute(query: str, context: dict, dev_dic: dict, state: bool):
-    '''
-    Executes a query and sets the devices accordingly
-
-    query: the relational algebra query
-    contest: the context for the query (a dictionary where the keys are names and values are relations)
-    dev_dic: a dictionary where the key is the id and the value is the device object
-    state: the desired state for the devices matching the query
-    '''
-    expr = parse(query)
-    devs = expr(context)
-    id_index = devs.header.index('id')
-    for dev in devs:
-        print(dev, state)
-        dev_dic[dev[id_index]].switch(state)
-
-
 class Profile(collections.namedtuple('profile', ('name', 'onquery', 'offquery'))):
     def activate(self):
-        rels,tags,dic=get_relations()
-        context={'devices': rels, 'tags': tags}
-        execute(self.offquery, context, dic, False)
-        execute(self.onquery, context, dic, True)
+        rels, tags, dev_dict = get_relations()
+        context = {'devices': rels, 'tags': tags}
+
+        expr_on = parse(self.onquery)
+        expr_off = parse(self.offquery)
+        rel_devs_on = expr_on(context)
+        rel_devs_off = expr_off(context)
+
+        # Allow overlapping queries
+        if len(rel_devs_off.intersection(rel_devs_on)):
+            print("warning, they intersect")
+            rel_devs_off = rel_devs_off.difference(rel_devs_on)
+
+        id_index = rel_devs_on.header.index('id')
+        for dev in rel_devs_on:
+            dev_dict[dev[id_index]].switch(True)
+        id_index = rel_devs_off.header.index('id')
+        for dev in rel_devs_off:
+            dev_dict[dev[id_index]].switch(False)
