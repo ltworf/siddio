@@ -25,11 +25,21 @@ from configobj import ConfigObj
 import profiles
 
 
+PROFILE_ACTIVATE = b'a'
+PROFILE_LIST = b'l'
+
+
 class AsyncConnection(asyncore.dispatcher_with_send):
     def handle_read(self):
-        command = self.recv(9000)
-        profile = profiles.get_profile(command.decode('utf8'))
-        profile.activate()
+        command = self.recv(1)
+        if command == PROFILE_ACTIVATE:
+            pname = self.recv(1024).decode('utf8')
+            print('Activating profile:', pname)
+            profile = profiles.get_profile(pname)
+            profile.activate()
+            self.close()
+        elif command == PROFILE_LIST:
+            pass
 
 
 class AsyncServer(asyncore.dispatcher):
