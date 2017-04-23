@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+if test -z "$HOMECONTROL"; then
+    if test -f "~/.config/setprofile.conf"; then
+        HOMECONTROL=$(cat ~/.config/setprofile.conf)
+    fi
+    HOMECONTROL=$(cat /etc/siddio/setprofile.conf)
+fi
+
+if test -z "$1"; then
+    echo "    Usage:"
+    echo $0 --list
+    echo $0 profilename
+fi
+
+if test "$1" = "--list"; then
+sh -c "printf l | nc $HOMECONTROL"
+echo
+fi
+
+sh -c "printf a$1 | nc $HOMECONTROL"
