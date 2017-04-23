@@ -42,6 +42,10 @@ def get_profile(name):
     return _profiles[name]
 
 
+def get_profiles():
+    return _profiles.keys()
+
+
 def get_relations():
     '''
     Returns dev_rel, tag_rel, dev_dic

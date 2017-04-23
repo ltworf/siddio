@@ -39,7 +39,9 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             profile.activate()
             self.close()
         elif command == PROFILE_LIST:
-            pass
+            pnames = (pname.encode('utf8') for pname in profiles.get_profiles())
+            self.send(b'\n'.join(pnames))
+            self.close()
 
 
 class AsyncServer(asyncore.dispatcher):
