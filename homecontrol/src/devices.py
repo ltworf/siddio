@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # Siddio
 # Copyright (C) 2017 Salvo "LtWorf" Tomaselli
 #
