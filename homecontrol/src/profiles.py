@@ -17,10 +17,30 @@
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import collections
 
+from configobj import ConfigObj
 from relational.relation import Relation, Header
 from relational.parser import parse
 
 import devices
+
+
+_profiles = {}
+
+
+def load_profiles(filename):
+    '''
+    loads or reloads the profiles from configuration file
+    '''
+    profiles_conf = ConfigObj(filename)
+    _profiles.clear()
+    for name in profiles_conf:
+        profile = profiles_conf[name]
+        _profiles[name] = Profile(name, profile['on'], profile['off'])
+
+
+def get_profile(name):
+    return _profiles[name]
+
 
 def get_relations():
     '''
