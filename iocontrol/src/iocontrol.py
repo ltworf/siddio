@@ -59,7 +59,7 @@ class Device():
 
 
 
-def get_devices(filename='/etc/siddio-iocontrol.conf'):
+def get_devices(filename='/etc/siddio/iocontrol.conf'):
     '''
     Loads the configuration and returns a list of tuples in
     the form of (pin, initial_state, description).
