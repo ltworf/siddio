@@ -12,6 +12,7 @@ if test -z "$1"; then
     echo "    Usage:"
     echo $0 --list
     echo $0 profilename
+    exit 1
 fi
 
 if test "$1" = "--list"; then
