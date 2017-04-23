@@ -29,6 +29,18 @@ GETTAGS = b't'
 
 
 class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'host', 'port', 'dev_id'))):
+    '''
+    A device on an iocontrol daemon
+
+    It can query it for state and change it
+
+    The other properties are set statically when probing the iocontrol for
+    devices.
+
+    The properties dictionary contains the extra properties defined
+    by the user in the configuration file. They are extracted from the
+    tags.
+    '''
     def __new__(cls, *args, **kwargs):
             self = super(Device, cls).__new__(cls, *args, **kwargs)
 
@@ -43,6 +55,8 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
     def get_state(self):
         '''
         returns the state of the device.
+
+        caches the last known state, doesn't communicate with the device
         '''
         if not hasattr(self, '_state'):
             self.update()
