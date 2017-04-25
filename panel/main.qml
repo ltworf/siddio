@@ -13,7 +13,7 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
-        BusStop {
+        WeatherForm {
         }
 
         Page {
