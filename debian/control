@@ -5,3 +5,12 @@ Maintainer: Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>
 Package: siddio-iocontrol
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}
+
+Package: siddio-homecontrol
+
+Package: siddio-panel
+Depends: qml-module-qtquick-controls2, qml-module-qtquick-templates2
+
+Package: siddio-setprofile
+Depends: netcat-openbsd
+Recommends: bash-completion
