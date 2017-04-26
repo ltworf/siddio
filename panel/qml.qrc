@@ -34,5 +34,7 @@
         <file>icons/weather-storm-night.png</file>
         <file>icons/weather-storm.png</file>
         <file>main.cpp</file>
+        <file>Spacer.qml</file>
+        <file>SettingsForm.qml</file>
     </qresource>
 </RCC>
