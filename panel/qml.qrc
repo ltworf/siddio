@@ -36,5 +36,7 @@
         <file>main.cpp</file>
         <file>Spacer.qml</file>
         <file>SettingsForm.qml</file>
+        <file>BusStopForm.qml</file>
+        <file>Secrets.qml</file>
     </qresource>
 </RCC>
