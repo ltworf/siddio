@@ -56,6 +56,18 @@ Item {
         }
     }
 
+    function set_blank() {
+        set_image('')
+        low = ''
+        high = ''
+        title = 'no data'
+        sunrise = ''
+        sunset = ''
+        wind_speed = ''
+        speed_unit = ''
+        temperature_unit = ''
+    }
+
     function fetch_again() {
         if (city === '')
             return
@@ -69,17 +81,22 @@ Item {
         http.onreadystatechange = function() { // Call a function when the state changes.
                     if (http.readyState === XMLHttpRequest.DONE) {
                         if (http.status == 200) {
-                            var data = JSON.parse(http.responseText)['query']['results']['channel']
-                            low = data['item']['forecast'][0]['low']
-                            high = data['item']['forecast'][0]['high']
-                            set_image(data['item']['forecast'][0]['text'])
-                            title = data['title']
-                            sunrise = data['astronomy']['sunrise']
-                            sunset = data['astronomy']['sunset']
-                            wind_speed = data['wind']['speed']
-                            speed_unit = data['units']['speed']
-                            temperature_unit = data['units']['temperature']
+                            try {
+                                var data = JSON.parse(http.responseText)['query']['results']['channel']
+                                low = data['item']['forecast'][0]['low']
+                                high = data['item']['forecast'][0]['high']
+                                set_image(data['item']['forecast'][0]['text'])
+                                title = data['title']
+                                sunrise = data['astronomy']['sunrise']
+                                sunset = data['astronomy']['sunset']
+                                wind_speed = data['wind']['speed']
+                                speed_unit = data['units']['speed']
+                                temperature_unit = data['units']['temperature']
+                            } catch (err) {
+                                set_blank()
+                            }
                         } else {
+                            set_blank()
                             console.log("error: " + http.status)
                         }
                     }
