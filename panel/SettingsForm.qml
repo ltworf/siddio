@@ -6,11 +6,22 @@ Item {
 
     property alias city: txtCity.text
     property alias stop: txtStop.text
+    property alias track_filter: txtTrackFilter.text
+    property alias host: txtHomeControlHost.text
+    property alias port: txtHomeControlPort.text
 
     property int fontsize: 27
     GridLayout {
         columns: 2
         anchors.fill: parent
+
+        Spacer {}
+
+        Label {
+            fontSizeMode: Text.HorizontalFit;
+            font.pointSize: fontsize;
+            text: qsTr('Weather')
+        }
 
         Label {
             fontSizeMode: Text.HorizontalFit;
@@ -25,6 +36,14 @@ Item {
             Layout.fillWidth: true
         }
 
+        Spacer {}
+
+        Label {
+            fontSizeMode: Text.HorizontalFit;
+            font.pointSize: fontsize;
+            text: qsTr('Västtrafik')
+        }
+
         Label {
             fontSizeMode: Text.HorizontalFit;
             font.pointSize: fontsize;
@@ -35,6 +54,53 @@ Item {
             id: txtStop
             placeholderText: qsTr("Bus stop")
             text: "SKF"
+            Layout.fillWidth: true
+        }
+
+        Label {
+            fontSizeMode: Text.HorizontalFit;
+            font.pointSize: fontsize;
+            text: qsTr('Track filter')
+        }
+
+        TextField {
+            id: txtTrackFilter
+            placeholderText: qsTr("A")
+            text: ''
+            Layout.fillWidth: true
+        }
+
+        Spacer {}
+
+        Label {
+            fontSizeMode: Text.HorizontalFit;
+            font.pointSize: fontsize;
+            text: qsTr('Homecontrol')
+        }
+
+        Label {
+            fontSizeMode: Text.HorizontalFit;
+            font.pointSize: fontsize;
+            text: qsTr('Port')
+        }
+
+        TextField {
+            id: txtHomeControlPort
+            placeholderText: qsTr("4040")
+            text: '4040'
+            Layout.fillWidth: true
+        }
+
+        Label {
+            fontSizeMode: Text.HorizontalFit;
+            font.pointSize: fontsize;
+            text: qsTr('Host')
+        }
+
+        TextField {
+            id: txtHomeControlHost
+            placeholderText: qsTr("A")
+            text: '10.9'
             Layout.fillWidth: true
         }
 
