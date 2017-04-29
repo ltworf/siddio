@@ -3,8 +3,10 @@ import QtQuick 2.7
 Item {
     property string api_key
     property string stop
+    property string name //proper name of the stop, from the API
     property string track_filter: ''
-    property int update_interval: 60
+    property string stop_id: ''
+    property int update_interval: 30
 
     property string server_time
     property string server_date
@@ -18,15 +20,21 @@ Item {
     Timer {
         triggeredOnStart: true
         interval: 1000 * update_interval
-        running: true;
+        running: stop_id.length > 0;
         repeat: true
-        onTriggered: fetch_again()
+        onTriggered: update_stop()
     }
 
-    function update_stop(id) {
+    function update_stop() {
+        console.log('update board')
+        if (stop_id.length == 0) {
+            items.clear()
+            return
+        }
+
         var http = new XMLHttpRequest()
         http.responseType = 'arraybuffer';
-        var url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?format=json&authKey=" + api_key + "&timeSpan=120&maxDeparturesPerLine=4&id=" + id;
+        var url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?format=json&authKey=" + api_key + "&timeSpan=120&maxDeparturesPerLine=4&id=" + stop_id;
         http.open("GET", url);
 
 
@@ -37,7 +45,6 @@ Item {
             items.clear()
             if (http.readyState == XMLHttpRequest.DONE) {
                 if (http.status == 200) {
-//                  console.log(http.responseText)
                     var data = JSON.parse(http.responseText)['DepartureBoard']
 
                     var _servertime = data['servertime'].split(':')
@@ -47,11 +54,12 @@ Item {
                     server_date = data['serverdate']
                     server_time = data['servertime']
 
-
                     var buckets = {}
                     for (var i = 0; i < data['Departure'].length; i++) {
                         var item = data['Departure'][i]
-                        console.log(item)
+
+                        if (track_filter.length > 0 &&  track_filter.indexOf(item.track) == -1)
+                            continue
 
                         var _itemtime = item['rtTime'].split(':')
                         var _itemdate = item['rtDate'].split('-')
@@ -62,7 +70,6 @@ Item {
                         }
                         buckets[item.sname + item.direction].eta += ((itemdate - serverdate) / 1000 / 60) + ' '
                     }
-
 
                     for (var k in buckets){
                         items.append(buckets[k])
@@ -76,30 +83,35 @@ Item {
         http.send();
     }
 
+    onStopChanged: fetch_again()
+    onApi_keyChanged: fetch_again()
+    onTrack_filterChanged: fetch_again()
+
     function fetch_again() {
-//      http://api.vasttrafik.se/bin/rest.exe/v1/location.name?format=json&authKey="+ api_key +"&input=rymdtorget
-        update_stop('9021014005531000')
-        return
-//            var http = new XMLHttpRequest()
-//            http.responseType = 'arraybuffer';
-//            var url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?format=json&authKey=" + api_key + "&timeSpan=120&maxDeparturesPerLine=4&id=9021014005531000";
-//            http.open("GET", url);
+        if (api_key.length == 0 || stop.length == 0)
+            return
+        var http = new XMLHttpRequest()
+        http.responseType = 'arraybuffer';
+        var url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?format=json&authKey="+ api_key +"&input=" + stop
+        console.log(url)
+        http.open("GET", url);
 
 
-//            // Send the proper header information along with the request
-//            http.setRequestHeader("Connection", "close");
+        // Send the proper header information along with the request
+        http.setRequestHeader("Connection", "close");
 
-//            http.onreadystatechange = function() { // Call a function when the state changes.
-//                        if (http.readyState == XMLHttpRequest.DONE) {
-//                            if (http.status == 200) {
-//                                console.log("salvook")
-//                                var turi = JSON.parse(http.responseText)
-//                                console.log(turi)
-//                            } else {
-//                                console.log("error: " + http.status)
-//                            }
-//                        }
-//                    }
-//            http.send();
+        http.onreadystatechange = function() { // Call a function when the state changes.
+            if (http.readyState == XMLHttpRequest.DONE) {
+                if (http.status == 200) {
+                    var data = JSON.parse(http.responseText)['LocationList']['StopLocation'][0]
+                    stop_id = data.id
+                    name = data.name
+                    update_stop()
+                } else {
+                    console.log("error: " + http.status)
+                }
+            }
         }
+        http.send();
+    }
 }
