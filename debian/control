@@ -1,16 +1,20 @@
 Source: siddio
 Priority: optional
 Maintainer: Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>
+Homepage: https://github.com/ltworf/siddio
 
-Package: siddio-iocontrol
-Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}
+#Package: siddio-iocontrol
+#Architecture: all
+#Depends: ${misc:Depends}, ${python3:Depends}
 
-Package: siddio-homecontrol
+#Package: siddio-homecontrol
+#Architecture: all
 
-Package: siddio-panel
-Depends: qml-module-qtquick-controls2, qml-module-qtquick-templates2
+#Package: siddio-panel
+#Depends: qml-module-qtquick-controls2, qml-module-qtquick-templates2
+#Architecture: any
 
 Package: siddio-setprofile
+Architecture: all
 Depends: netcat-openbsd
 Recommends: bash-completion
