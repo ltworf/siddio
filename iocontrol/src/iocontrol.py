@@ -102,6 +102,8 @@ class AsyncConnection(asyncore.dispatcher_with_send):
 
     def handle_read(self):
         command = self.recv(1)
+        fmt = '!B'
+
         if command == SETSTATE:
             fmt = '!BB'
             id, state = struct.unpack(fmt, self.recv(2))
@@ -110,11 +112,9 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             self.send(b'ok')
             return
         elif command == GETSTATE:
-            fmt = '!B'
             id = struct.unpack(fmt, self.recv(1))[0]
             data = (get_devices()[id].get_state(),)
         elif command == GETCOUNT:
-            fmt = '!B'
             data = (len(get_devices()), )
         elif command == GETNAME:
             name = self._read_dev().name
