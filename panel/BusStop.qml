@@ -3,7 +3,7 @@ import QtQuick 2.7
 Item {
     property string api_key
     property string stop
-    property string track_filter: '*'
+    property string track_filter: ''
     property int update_interval: 60
 
     property string server_time
@@ -40,11 +40,32 @@ Item {
 //                  console.log(http.responseText)
                     var data = JSON.parse(http.responseText)['DepartureBoard']
 
+                    var _servertime = data['servertime'].split(':')
+                    var _serverdate = data['serverdate'].split('-')
+                    var serverdate = new Date(_serverdate[0], _serverdate[1], _serverdate[2], _servertime[0], _servertime[1])
+
                     server_date = data['serverdate']
                     server_time = data['servertime']
 
+
+                    var buckets = {}
                     for (var i = 0; i < data['Departure'].length; i++) {
-                        items.append(data['Departure'][i])
+                        var item = data['Departure'][i]
+                        console.log(item)
+
+                        var _itemtime = item['rtTime'].split(':')
+                        var _itemdate = item['rtDate'].split('-')
+                        var itemdate = new Date(_itemdate[0], _itemdate[1], _itemdate[2], _itemtime[0], _itemtime[1])
+                        if (typeof(buckets[item.sname + item.direction]) == 'undefined') {
+                            buckets[item.sname + item.direction] = item
+                            buckets[item.sname + item.direction].eta = ''
+                        }
+                        buckets[item.sname + item.direction].eta += ((itemdate - serverdate) / 1000 / 60) + ' '
+                    }
+
+
+                    for (var k in buckets){
+                        items.append(buckets[k])
                     }
 
                 } else {
