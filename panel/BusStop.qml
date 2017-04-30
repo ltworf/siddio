@@ -18,7 +18,7 @@ Item {
     }
 
     Timer {
-        triggeredOnStart: true
+        triggeredOnStart: false
         interval: 1000 * update_interval
         running: stop_id.length > 0;
         repeat: true
@@ -61,8 +61,17 @@ Item {
                         if (track_filter.length > 0 &&  track_filter.indexOf(item.track) == -1)
                             continue
 
-                        var _itemtime = item['rtTime'].split(':')
-                        var _itemdate = item['rtDate'].split('-')
+                        var date_key
+                        var time_key
+                        if (typeof(item['rtTime']) == 'undefined') {
+                            date_key = 'date'
+                            time_key = 'time'
+                        } else {
+                            date_key = 'rtDate'
+                            time_key = 'rtTime'
+                        }
+                        var _itemtime = item[time_key].split(':')
+                        var _itemdate = item[date_key].split('-')
                         var itemdate = new Date(_itemdate[0], _itemdate[1], _itemdate[2], _itemtime[0], _itemtime[1])
                         if (typeof(buckets[item.sname + item.direction]) == 'undefined') {
                             buckets[item.sname + item.direction] = item
@@ -86,6 +95,7 @@ Item {
     onStopChanged: fetch_again()
     onApi_keyChanged: fetch_again()
     onTrack_filterChanged: fetch_again()
+    onStop_idChanged: update_stop()
 
     function fetch_again() {
         if (api_key.length == 0 || stop.length == 0)
@@ -106,7 +116,6 @@ Item {
                     var data = JSON.parse(http.responseText)['LocationList']['StopLocation'][0]
                     stop_id = data.id
                     name = data.name
-                    update_stop()
                 } else {
                     console.log("error: " + http.status)
                 }
