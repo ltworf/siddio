@@ -6,6 +6,7 @@ Item {
     property int fontsize: 27
     property alias city: weather.city
 
+    clip: true
     Weather {
         id: weather
     }
@@ -23,9 +24,18 @@ Item {
                     source: weather.image
             }
             RowLayout {
-                Label {fontSizeMode: Text.HorizontalFit; font.pointSize: fontsize; text: weather.low + '°'}
+                id: templayout
+                Text {
+                    fontSizeMode: Text.HorizontalFit;
+                    font.pointSize: fontsize;
+                    text: weather.low + '°'
+                }
                 Spacer {}
-                Label {fontSizeMode: Text.HorizontalFit; font.pointSize: fontsize; text: weather.high + '°'}
+                Text {
+                    fontSizeMode: Text.HorizontalFit;
+                    font.pointSize: fontsize;
+                    text: weather.high + '°'
+                }
             }
         }
 
