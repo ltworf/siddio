@@ -94,7 +94,7 @@ Item {
 
     onStopChanged: fetch_again()
     onApi_keyChanged: fetch_again()
-    onTrack_filterChanged: fetch_again()
+    onTrack_filterChanged: update_stop()
     onStop_idChanged: update_stop()
 
     function fetch_again() {
