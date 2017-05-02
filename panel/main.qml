@@ -8,31 +8,66 @@ ApplicationWindow {
     height: 480
     title: qsTr("siddio")
 
+    Secrets {id: secrets}
+
     SwipeView {
-        id: swipeView
+        id: view
+        currentIndex: 0
         anchors.fill: parent
-        currentIndex: tabBar.currentIndex
 
-        Item{
-            WeatherForm {city: settings.city}
-        }
+        Item {
+            id: secondPage
+            WeatherForm {
+                width: parent.width / 2
+                height: 175
+                anchors.top: parent.top
+                anchors.left: parent.left
+                id:weather
+                city: settings.city
+            }
 
-        Page {
-            SettingsForm {
-                anchors.fill: parent
-                id: settings
+            Rectangle { //placeholder
+                width: parent.width / 2
+                height: weather.height
+                anchors.top: parent.top
+                anchors.right: parent.right
+                color: 'red'
+            }
+
+            BusStopForm {
+                width: parent.width
+                anchors.bottom: parent.bottom
+                anchors.top: weather.bottom
+                anchors.left: parent.left
+                stop: settings.stop
+                api_key: secrets.vasttrafik_api_key
+                track_filter: settings.track_filter
             }
         }
+
+        SettingsForm {
+            id: settings
+        }
     }
 
-    footer: TabBar {
-        id: tabBar
-        currentIndex: swipeView.currentIndex
-        TabButton {
-            text: qsTr("Main")
-        }
-        TabButton {
-            text: qsTr("Settings")
-        }
+    PageIndicator {
+        id: indicator
+        count: view.count
+        currentIndex: view.currentIndex
+
+        anchors.bottom: view.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
+
+
+//    footer: TabBar {
+//        id: tabBar
+//        currentIndex: swipeView.currentIndex
+//        TabButton {
+//            text: qsTr("Main")
+//        }
+//        TabButton {
+//            text: qsTr("Settings")
+//        }
+//    }
 }
