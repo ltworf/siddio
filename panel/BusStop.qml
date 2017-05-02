@@ -58,7 +58,7 @@ Item {
                     for (var i = 0; i < data['Departure'].length; i++) {
                         var item = data['Departure'][i]
 
-                        if (track_filter.length > 0 &&  track_filter.indexOf(item.track) == -1)
+                        if (track_filter.length > 0 &&  track_filter.toUpperCase().indexOf(item.track) == -1)
                             continue
 
                         var date_key
