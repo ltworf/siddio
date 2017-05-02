@@ -66,7 +66,7 @@ Item {
         TextField {
             id: txtTrackFilter
             placeholderText: qsTr("A")
-            text: ''
+            text: 'AC'
             Layout.fillWidth: true
         }
 
@@ -103,6 +103,9 @@ Item {
             text: '10.9'
             Layout.fillWidth: true
         }
+
+        Spacer{}
+        Spacer{}
 
     }
 }
