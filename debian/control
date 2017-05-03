@@ -16,7 +16,7 @@ Homepage: https://github.com/ltworf/siddio
 
 Package: siddio-setprofile
 Architecture: all
-Depends: netcat-openbsd
+Depends: netcat-openbsd, ${misc:Depends}
 Recommends: bash-completion
 Description: siddio is a distributed home automation project
  .
