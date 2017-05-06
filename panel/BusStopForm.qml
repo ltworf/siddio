@@ -8,6 +8,7 @@ ListView {
     property alias track_filter: bus_stop.track_filter
     property int fontsize: 27
     property int fontsize_normal: 20
+    property int squaresize: 70
 
     BusStop {id: bus_stop}
     clip: true
@@ -21,7 +22,7 @@ ListView {
         Rectangle {
             id: rect_name
             color: fgColor
-            height: 70 //(lbl_name.height > lbl_name.width ? lbl_name.height: lbl_name.width)
+            height: squaresize
             width: height * 1.1
             Text {
                 verticalAlignment: Text.AlignVCenter
