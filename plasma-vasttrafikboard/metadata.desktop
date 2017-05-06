@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Västtrafik Board
+Comment=Shows a Västtrafik board
+Encoding=UTF-8
+Icon=korganizer
+ServiceTypes=Plasma/Applet
+Type=Service
+X-KDE-PluginInfo-Author=Salvo 'LtWorf' Tomaselli
+X-KDE-PluginInfo-Email=tiposchi@tiscali.it
+X-KDE-PluginInfo-Name=org.siddio.plasmaboard
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-Website=https://github.com/ltworf/siddio
+X-Plasma-API=declarativeappletscript
+X-Plasma-MainScript=ui/main.qml
