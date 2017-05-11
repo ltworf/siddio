@@ -1,0 +1,9 @@
+[Unit]
+Description=Siddio/iocontrol
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/siddio-iocontrol
+
+[Install]
+WantedBy=multi-user.target
