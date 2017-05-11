@@ -3,9 +3,16 @@ Priority: optional
 Maintainer: Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>
 Homepage: https://github.com/ltworf/siddio
 
-#Package: siddio-iocontrol
-#Architecture: all
-#Depends: ${misc:Depends}, ${python3:Depends}
+Package: siddio-iocontrol
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}, python3-rpi.gpio, python3-configobj
+Description: siddio is a distributed home automation project
+ .
+ This package is meant to run on raspberry pi or similar and
+ control the GPIO pins that are connected to the devices.
+ .
+ The configuration allows user defined tags that are used by
+ homecontrol to query the devices.
 
 #Package: siddio-homecontrol
 #Architecture: all
