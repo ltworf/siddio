@@ -88,6 +88,10 @@ def get_devices(filename='/etc/siddio/iocontrol.conf'):
 
 
 class AsyncConnection(asyncore.dispatcher_with_send):
+    def __init__(self, pair):
+        asyncore.dispatcher_with_send.__init__(self, pair[0])
+        self.addr = pair[1]
+
     def _send_str(self, string):
         data = string.encode('utf8')
         self.send(data + b'\0')
@@ -147,8 +151,7 @@ class AsyncServer(asyncore.dispatcher):
     def handle_accept(self):
         pair = self.accept()
         if pair:
-            sock, addr = pair
-            connection = AsyncConnection(sock)
+            connection = AsyncConnection(pair)
 
 
 def main():
