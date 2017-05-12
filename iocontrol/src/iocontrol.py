@@ -126,7 +126,6 @@ class AsyncConnection(asyncore.dispatcher_with_send):
         if command == Commands.SETSTATE:
             fmt = '!BB'
             id, state = struct.unpack(fmt, self.recv(2))
-            print(id, state)
             get_devices()[id].set_state(bool(state))
             self.send(b'ok')
             return
