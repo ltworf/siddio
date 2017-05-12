@@ -110,6 +110,8 @@ class AsyncConnection(asyncore.dispatcher_with_send):
 
     def handle_read(self):
         cmdstring = self.recv(1)
+        if not cmdstring: # skip empty packets
+            return
 
         try:
             command = Commands(cmdstring)
