@@ -108,7 +108,7 @@ def get_relations():
 
 
 class Profile(collections.namedtuple('profile', ('name', 'onquery', 'offquery'))):
-    def activate(self):
+    def _getrels(self):
         rels, tags, dev_dict = get_relations()
         context = {'devices': rels, 'tags': tags}
 
@@ -121,6 +121,24 @@ class Profile(collections.namedtuple('profile', ('name', 'onquery', 'offquery'))
         if len(rel_devs_off.intersection(rel_devs_on)):
             print("warning, they intersect")
             rel_devs_off = rel_devs_off.difference(rel_devs_on)
+
+        return dev_dict, rel_devs_on, rel_devs_off
+
+
+    def is_active(self) -> bool:
+        dev_dict, rel_devs_on, rel_devs_off = self._getrels()
+
+        id_index = rel_devs_on.header.index('id')
+        on = all(dev_dict[dev[id_index]].get_state() for dev in rel_devs_on)
+
+        id_index = rel_devs_off.header.index('id')
+        off = all(not dev_dict[dev[id_index]].get_state() for dev in rel_devs_off)
+
+        return on and off
+
+
+    def activate(self):
+        dev_dict, rel_devs_on, rel_devs_off = self._getrels()
 
         id_index = rel_devs_on.header.index('id')
         for dev in rel_devs_on:
