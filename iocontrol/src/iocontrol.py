@@ -19,6 +19,7 @@
 import asyncore
 import socket
 import struct
+from syslog import *
 
 from configobj import ConfigObj
 import RPi.GPIO as GPIO
@@ -30,7 +31,6 @@ GETCOUNT = b'c'
 GETNAME = b'n'
 GETDESCR = b'd'
 GETTAGS = b't'
-
 
 
 class Device():
@@ -49,14 +49,15 @@ class Device():
 
 
     def set_state(self, state: bool):
+        syslog(LOG_INFO, 'Setting state %s for %s' % (state, self.name))
         self.state = state
         if self.invert:
             state = not state
         GPIO.output(self.pin, state)
+        syslog(LOG_DEBUG, 'Pin %d set to %s' % (self.pin, state))
 
     def get_state(self):
         return self.state
-
 
 
 def get_devices(filename='/etc/siddio/iocontrol.conf'):
@@ -148,6 +149,7 @@ class AsyncServer(asyncore.dispatcher):
 
 
 def main():
+    openlog('iocontrol')
 
     try:
         # Initialising the pins
