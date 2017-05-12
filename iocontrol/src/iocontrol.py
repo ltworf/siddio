@@ -17,6 +17,7 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import asyncore
+import enum
 import socket
 import struct
 from syslog import *
@@ -25,12 +26,13 @@ from configobj import ConfigObj
 import RPi.GPIO as GPIO
 
 
-SETSTATE = b's'
-GETSTATE = b'g'
-GETCOUNT = b'c'
-GETNAME = b'n'
-GETDESCR = b'd'
-GETTAGS = b't'
+class Commands(enum.Enum):
+    SETSTATE = b's'
+    GETSTATE = b'g'
+    GETCOUNT = b'c'
+    GETNAME = b'n'
+    GETDESCR = b'd'
+    GETTAGS = b't'
 
 
 class Device():
@@ -107,36 +109,41 @@ class AsyncConnection(asyncore.dispatcher_with_send):
         return get_devices()[id]
 
     def handle_read(self):
-        command = self.recv(1)
+        cmdstring = self.recv(1)
+
+        try:
+            command = Commands(cmdstring)
+            syslog(LOG_INFO, self.logid + ' ' + command.name)
+        except ValueError:
+            syslog(LOG_INFO, self.logid + ' invalid command, %s dropping connection' % repr(cmdstring))
+            self.close()
+            return
+
         fmt = '!B'
 
-        if command == SETSTATE:
+        if command == Commands.SETSTATE:
             fmt = '!BB'
             id, state = struct.unpack(fmt, self.recv(2))
             print(id, state)
             get_devices()[id].set_state(bool(state))
             self.send(b'ok')
             return
-        elif command == GETSTATE:
+        elif command == Commands.GETSTATE:
             id = struct.unpack(fmt, self.recv(1))[0]
             data = (get_devices()[id].get_state(),)
-        elif command == GETCOUNT:
+        elif command == Commands.GETCOUNT:
             data = (len(get_devices()), )
-        elif command == GETNAME:
+        elif command == Commands.GETNAME:
             name = self._read_dev().name
             self._send_str(name)
             return
-        elif command == GETDESCR:
+        elif command == Commands.GETDESCR:
             description = self._read_dev().description
             self._send_str(description)
             return
-        elif command == GETTAGS:
+        elif command == Commands.GETTAGS:
             tags = self._read_dev().tags
             self._send_str(','.join(tags))
-            return
-        else:
-            syslog(LOG_INFO, self.logid + ' invalid command, dropping connection')
-            self.close()
             return
         self.send(struct.pack(fmt, *data))
 
