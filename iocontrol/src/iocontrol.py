@@ -51,7 +51,7 @@ class Device():
 
 
     def set_state(self, state: bool):
-        syslog(LOG_INFO, 'Setting state %s for %s' % (state, self.name))
+        syslog(LOG_INFO, 'Setting state %s for %s' % ('ON' if state else 'OFF', self.name))
         self.state = state
         if self.invert:
             state = not state
