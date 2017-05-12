@@ -90,7 +90,8 @@ def get_devices(filename='/etc/siddio/iocontrol.conf'):
 class AsyncConnection(asyncore.dispatcher_with_send):
     def __init__(self, pair):
         asyncore.dispatcher_with_send.__init__(self, pair[0])
-        self.addr = pair[1]
+        addr = pair[1]
+        self.logid = '%s:%d' % addr
 
     def _send_str(self, string):
         data = string.encode('utf8')
@@ -134,6 +135,7 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             self._send_str(','.join(tags))
             return
         else:
+            syslog(LOG_INFO, self.logid + ' invalid command, dropping connection')
             self.close()
             return
         self.send(struct.pack(fmt, *data))
