@@ -129,6 +129,9 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             tags = self._read_dev().tags
             self._send_str(','.join(tags))
             return
+        else:
+            self.close()
+            return
         self.send(struct.pack(fmt, *data))
 
 
