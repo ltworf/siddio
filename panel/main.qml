@@ -11,11 +11,6 @@ ApplicationWindow {
     title: qsTr("siddio")
 
     Secrets {id: secrets}
-    HomeControlClient {
-        id: homecontrol
-        port: 4040
-        host: settings.host
-    }
 
     SwipeView {
         id: view
@@ -33,17 +28,13 @@ ApplicationWindow {
                 city: settings.city
             }
 
-            Rectangle { //placeholder
+            Profiles { //placeholder
                 width: parent.width / 2
                 height: weather.height
                 anchors.top: parent.top
                 anchors.right: parent.right
-                color: 'red'
-                Button {
-                    anchors.fill: parent
-                    text: 'GO'
-                    onClicked: homecontrol.activate('evening')
-                }
+                host: settings.host
+                port: settings.port
             }
 
             BusStopForm {
