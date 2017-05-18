@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
+import siddio.control 1.0
+
 ApplicationWindow {
     visible: true
     width: 640
@@ -9,6 +11,11 @@ ApplicationWindow {
     title: qsTr("siddio")
 
     Secrets {id: secrets}
+    HomeControlClient {
+        id: homecontrol
+        port: 4040
+        host: settings.host
+    }
 
     SwipeView {
         id: view
@@ -32,6 +39,11 @@ ApplicationWindow {
                 anchors.top: parent.top
                 anchors.right: parent.right
                 color: 'red'
+                Button {
+                    anchors.fill: parent
+                    text: 'GO'
+                    onClicked: homecontrol.activate('evening')
+                }
             }
 
             BusStopForm {
@@ -58,7 +70,6 @@ ApplicationWindow {
         anchors.bottom: view.bottom
         anchors.horizontalCenter: parent.horizontalCenter
     }
-
 
 //    footer: TabBar {
 //        id: tabBar
