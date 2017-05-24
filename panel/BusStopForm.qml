@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
@@ -8,7 +8,7 @@ ListView {
     property alias track_filter: bus_stop.track_filter
     property int fontsize: 27
     property int fontsize_normal: 20
-    property int squaresize: 70
+    property int squaresize: 50
 
     BusStop {id: bus_stop}
     clip: true
@@ -18,8 +18,13 @@ ListView {
         font.pointSize: fontsize
     }
     model: bus_stop.items
-    delegate: RowLayout {
+    delegate: Item {
+        height: squaresize
+        width: parent.width
+
         Rectangle {
+            anchors.left: parent.left
+            anchors.top: parent.top
             id: rect_name
             color: fgColor
             height: squaresize
@@ -37,14 +42,26 @@ ListView {
         }
 
         Text {
+            clip: true
+            height: parent.height
+            anchors.left: rect_name.right
+            anchors.top: parent.top
+            width: parent.width - rect_name.width - eta.width
             text: direction
             verticalAlignment: Text.AlignVCenter
             fontSizeMode: Text.HorizontalFit
-            font.pointSize: fontsize_normal
+            font.pointSize: fontsize_normal * 0.6
+            leftPadding: height / 4
+            wrapMode: Text.WordWrap
         }
 
         Text {
+            clip: true
+            height: parent.height
+            anchors.right: parent.right
+            anchors.top: parent.top
             text: eta
+            width: contentWidth
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignRight
             font.pointSize: fontsize_normal

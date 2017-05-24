@@ -4,15 +4,17 @@ import QtQuick.Layouts 1.0
 
 import siddio.control 1.0
 
-Item {
+Rectangle {
     property alias port: homecontrol.port
     property alias host: homecontrol.host
     property int fontsize: 27
 
+    border.color: '#dddddd'
+    border.width: 1
+
     HomeControlClient {
         id: homecontrol
     }
-
 
     Button {
         anchors.top: parent.top
