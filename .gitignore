@@ -92,3 +92,4 @@ debian/files
 debian/siddio-setprofile.substvars
 debian/siddio-setprofile/
 debhelper-build-stamp
+build-*
