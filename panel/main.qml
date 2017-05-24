@@ -20,7 +20,7 @@ ApplicationWindow {
         Item {
             id: secondPage
             WeatherForm {
-                width: parent.width / 2
+                width: parent.width / 4 * 3
                 height: 175
                 anchors.top: parent.top
                 anchors.left: parent.left
@@ -29,7 +29,7 @@ ApplicationWindow {
             }
 
             Profiles { //placeholder
-                width: parent.width / 2
+                width: parent.width / 4
                 height: weather.height
                 anchors.top: parent.top
                 anchors.right: parent.right
