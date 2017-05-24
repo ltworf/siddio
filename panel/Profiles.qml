@@ -20,7 +20,10 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height / 2
-        text: '☀'
+        background: Image {
+            source: 'qrc:/icons/weather-clear.png'
+            width: height
+        }
         onClicked: homecontrol.activate('off')
         id: offProfile
         font.pointSize: fontsize
@@ -32,7 +35,10 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height / 2
-        text: '☾'
+        background: Image {
+            source: 'qrc:/icons/weather-clear-night.png'
+            width: height
+        }
         onClicked: homecontrol.activate('evening')
         id: eveningProfile
         font.pointSize: fontsize
