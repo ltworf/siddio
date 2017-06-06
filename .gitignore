@@ -93,3 +93,7 @@ debian/siddio-setprofile.substvars
 debian/siddio-setprofile/
 debhelper-build-stamp
 build-*
+qtcreator
+try_on_phone
+debian/*.substvars
+panel/panel.pro.user
