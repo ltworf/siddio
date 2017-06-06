@@ -2,6 +2,8 @@
 
 #include <QByteArray>
 #include <QTcpSocket>
+#include <QList>
+#include <QListIterator>
 
 HomeControlClient::HomeControlClient(QObject *parent) : QObject(parent)
 {
@@ -38,4 +40,37 @@ void HomeControlClient::activate(QString profile) {
     sock.write(buffer);
     sock.waitForBytesWritten();
     sock.close();
+}
+
+QStringList HomeControlClient::profiles() {
+    QByteArray buffer;
+    QTcpSocket sock;
+
+    buffer.append('l');
+    qDebug() << "connecting " << this->m_host << " " << this->m_port;
+
+    sock.connectToHost(this->m_host, this->m_port);
+    sock.waitForConnected();
+    sock.write(buffer);
+    sock.waitForBytesWritten();
+
+    buffer.clear();
+    while (sock.waitForReadyRead()) {
+        QByteArray b = sock.readAll();
+        qDebug() << "data" << b;
+        if (b.length() == 0)
+            break;
+        buffer.append(b);
+    }
+    sock.close();
+
+    QList<QByteArray> profile_list = buffer.split(' ');
+    QListIterator<QByteArray> i(profile_list);
+    QStringList r;
+
+    while (i.hasNext()) {
+        r.append(QString::fromUtf8(i.next()));
+    }
+
+    return r;
 }

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QStringList>
 
 class HomeControlClient : public QObject
 {
@@ -23,6 +24,7 @@ public slots:
     uint16_t port();
     void setHost(QString);
     QString host();
+    QStringList profiles();
 
 private:
     uint16_t m_port;
