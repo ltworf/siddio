@@ -39,5 +39,6 @@
         <file>BusStopForm.qml</file>
         <file>Secrets.qml</file>
         <file>Profiles.qml</file>
+        <file>ProfilesList.qml</file>
     </qresource>
 </RCC>

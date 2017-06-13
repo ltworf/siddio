@@ -77,7 +77,10 @@ Item {
                             buckets[item.sname + item.direction] = item
                             buckets[item.sname + item.direction].eta = ''
                         }
-                        buckets[item.sname + item.direction].eta += ((itemdate - serverdate) / 1000 / 60) + ' '
+                        var ttl = ((itemdate - serverdate) / 1000 / 60)
+                        if (ttl <= 0)
+                            continue
+                        buckets[item.sname + item.direction].eta += ttl + ' '
                     }
 
                     for (var k in buckets){
