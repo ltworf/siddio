@@ -4,6 +4,19 @@ Description=Siddio/iocontrol
 [Service]
 Type=simple
 ExecStart=/usr/sbin/siddio-iocontrol
+User=nobody
+Group=nogroup
+SupplementaryGroups=gpio
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+NoNewPrivileges=yes
+DevicePolicy=closed
+DeviceAllow=/dev/gpiomem rw
+InaccessiblePaths=-/boot -/media -/mnt -/opt -/srv -/var
 
 [Install]
 WantedBy=multi-user.target
