@@ -40,5 +40,15 @@
         <file>Secrets.qml</file>
         <file>Profiles.qml</file>
         <file>ProfilesList.qml</file>
+        <file>icons/profiles/off.png</file>
+        <file>icons/profiles/evening.png</file>
+        <file>icons/profiles/board_games.png</file>
+        <file>icons/profiles/building.png</file>
+        <file>icons/profiles/film.png</file>
+        <file>icons/profiles/gaming.png</file>
+        <file>icons/profiles/music.png</file>
+        <file>icons/profiles/reading.png</file>
+        <file>icons/profiles/soft.png</file>
+        <file>icons/profiles/speaker.png</file>
     </qresource>
 </RCC>

@@ -48,6 +48,11 @@ ApplicationWindow {
             }
         }
 
+        ProfilesList {
+            host: settings.host
+            port: settings.port
+        }
+
         SettingsForm {
             id: settings
         }
