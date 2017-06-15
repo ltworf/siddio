@@ -97,3 +97,7 @@ qtcreator
 try_on_phone
 debian/*.substvars
 panel/panel.pro.user
+debian/siddio-iocontrol/
+debian/siddio-homecontrol/
+debian/siddio-homecontrol.prerm.debhelper
+debian/siddio-homecontrol.postinst.debhelper
