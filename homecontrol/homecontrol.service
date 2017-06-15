@@ -1,0 +1,20 @@
+[Unit]
+Description=Siddio/iocontrol
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/siddio-homecontrol
+User=nobody
+Group=nogroup
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+NoNewPrivileges=yes
+PrivateDevices=yes
+InaccessiblePaths=-/boot -/media -/mnt -/opt -/srv -/var
+
+[Install]
+WantedBy=multi-user.target
