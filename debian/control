@@ -3,6 +3,9 @@ Priority: optional
 Maintainer: Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>
 Homepage: https://github.com/ltworf/siddio
 Build-Depends: debhelper (>= 10), python3, dh-python, dh-systemd
+Section: embedded
+Standards-Version: 3.9.8
+X-Python3-Version: >= 3.4
 
 Package: siddio-iocontrol
 Architecture: all
@@ -29,6 +32,7 @@ Description: siddio is a distributed home automation project
 
 Package: siddio-setprofile
 Architecture: all
+Section: utilities
 Depends: netcat-openbsd, ${misc:Depends}
 Recommends: bash-completion
 Description: siddio is a distributed home automation project
