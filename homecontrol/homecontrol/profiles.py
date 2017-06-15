@@ -21,7 +21,7 @@ from configobj import ConfigObj
 from relational.relation import Relation, Header
 from relational.parser import parse
 
-import devices
+from homecontrol import devices
 
 
 _profiles = {}

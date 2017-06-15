@@ -22,7 +22,7 @@ import struct
 
 from configobj import ConfigObj
 
-import profiles
+from homecontrol import profiles
 
 
 PROFILE_ACTIVATE = b'a'
