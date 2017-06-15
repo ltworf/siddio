@@ -18,6 +18,7 @@ fi
 if test "$1" = "--list"; then
 printf l | nc $HOST $PORT
 echo
+exit 0
 fi
 
 printf a$1 | nc $HOST $PORT
