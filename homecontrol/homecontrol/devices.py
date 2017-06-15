@@ -18,6 +18,7 @@
 import collections
 import socket
 import struct
+from syslog import *
 
 SETSTATE = b's'
 GETSTATE = b'g'

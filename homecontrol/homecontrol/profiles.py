@@ -16,6 +16,7 @@
 #
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import collections
+from syslog import *
 
 from configobj import ConfigObj
 from relational.relation import Relation, Header
@@ -39,7 +40,7 @@ def load_profiles(filename):
 
 
 def get_profile(name):
-    return _profiles[name]
+    return _profiles.get(name)
 
 
 def get_profiles():
@@ -119,7 +120,7 @@ class Profile(collections.namedtuple('profile', ('name', 'onquery', 'offquery'))
 
         # Allow overlapping queries
         if len(rel_devs_off.intersection(rel_devs_on)):
-            print("warning, they intersect")
+            syslog(LOG_WARNING, 'Relations intersect!')
             rel_devs_off = rel_devs_off.difference(rel_devs_on)
 
         return dev_dict, rel_devs_on, rel_devs_off
