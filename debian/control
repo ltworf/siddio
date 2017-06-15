@@ -14,8 +14,13 @@ Description: siddio is a distributed home automation project
  The configuration allows user defined tags that are used by
  homecontrol to query the devices.
 
-#Package: siddio-homecontrol
-#Architecture: all
+Package: siddio-homecontrol
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}, python3-relational, python3-configobj
+Description: siddio is a distributed home automation project
+ .
+ This package controls one or more iocontrol daemons and
+ sets the profiles.
 
 #Package: siddio-panel
 #Depends: qml-module-qtquick-controls2, qml-module-qtquick-templates2

@@ -7,3 +7,4 @@ SHELL=sh -e
 override_dh_auto_install:
 	make -C setprofile DESTDIR=../debian/siddio-setprofile install
 	make -C iocontrol DESTDIR=../debian/siddio-iocontrol install
+	make -C homecontrol DESTDIR=../debian/siddio-homecontrol install
