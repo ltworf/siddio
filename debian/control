@@ -9,7 +9,7 @@ X-Python3-Version: >= 3.4
 
 Package: siddio-iocontrol
 Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}, python3-rpi.gpio, python3-configobj
+Depends: ${misc:Depends}, ${python3:Depends}, python3-rpi.gpio, python3-configobj, systemd (>= 232)
 Description: siddio is a distributed home automation project
  .
  This package is meant to run on raspberry pi or similar and
@@ -20,7 +20,7 @@ Description: siddio is a distributed home automation project
 
 Package: siddio-homecontrol
 Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}, python3-relational, python3-configobj
+Depends: ${misc:Depends}, ${python3:Depends}, python3-relational, python3-configobj, systemd (>= 232)
 Description: siddio is a distributed home automation project
  .
  This package controls one or more iocontrol daemons and
