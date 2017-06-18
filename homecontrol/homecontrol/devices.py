@@ -114,5 +114,8 @@ def devices():
     #TODO read hosts from configuration file
     hosts = (('10.9', 4141),)
     for host, port in hosts:
-        r += _devices(host, port)
+        syslog(LOG_INFO, 'Querying iocontrol %s:%d for devices' % (host, port))
+        devs = _devices(host, port)
+        r += devs
+        syslog(LOG_INFO, 'Reported %d devices' % len(devs))
     return r
