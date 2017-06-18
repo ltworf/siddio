@@ -48,6 +48,7 @@ class Device():
 
         GPIO.setup(pin, GPIO.OUT)
         self.set_state(state)
+        syslog(LOG_INFO, 'Initialising device: %s on pin %d' % (name, pin))
 
 
     def set_state(self, state: bool):
@@ -75,6 +76,7 @@ def get_devices(filename='/etc/siddio/iocontrol.conf'):
     r = []
     for k,v in config.iteritems():
         if not k.startswith('Device'):
+            syslog(LOG_WARNING, 'Unrecognised section in config: %s' % k)
             continue
         r.append(Device(
             v['name'],
