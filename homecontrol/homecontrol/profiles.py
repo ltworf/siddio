@@ -113,10 +113,28 @@ class Profile(collections.namedtuple('profile', ('name', 'onquery', 'offquery'))
         rels, tags, dev_dict = get_relations()
         context = {'devices': rels, 'tags': tags}
 
-        expr_on = parse(self.onquery)
-        expr_off = parse(self.offquery)
-        rel_devs_on = expr_on(context)
-        rel_devs_off = expr_off(context)
+        try:
+            expr_on = parse(self.onquery)
+        except Exception as e:
+            syslog(LOG_ERR, 'Unable to parse %s %s' % (self.onquery, e))
+            raise
+        try:
+            expr_off = parse(self.offquery)
+        except Exception as e:
+            syslog(LOG_ERR, 'Unable to parse %s %s' % (self.offquery, e))
+            raise
+
+        try:
+            rel_devs_on = expr_on(context)
+        except Exception as e:
+            syslog(LOG_ERR, 'Error in running query: %s %s' % (self.onquery, e))
+            raise
+
+        try:
+            rel_devs_off = expr_off(context)
+        except Exception as e:
+            syslog(LOG_ERR, 'Error in running query: %s %s' % (self.offquery, e))
+            raise
 
         # Allow overlapping queries
         if len(rel_devs_off.intersection(rel_devs_on)):
