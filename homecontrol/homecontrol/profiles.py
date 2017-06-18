@@ -36,7 +36,11 @@ def load_profiles(filename):
     _profiles.clear()
     for name in profiles_conf:
         profile = profiles_conf[name]
-        _profiles[name] = Profile(name, profile['on'], profile['off'])
+        _profiles[name] = Profile(
+            name,
+            profile.get('on','σ False(devices)'),
+            profile.get('off','σ False(devices)'),
+        )
 
 
 def get_profile(name):
