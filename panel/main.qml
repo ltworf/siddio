@@ -45,6 +45,7 @@ ApplicationWindow {
                 stop: settings.stop
                 api_key: secrets.vasttrafik_api_key
                 track_filter: settings.track_filter
+                walkTime: settings.walkTime
             }
         }
 

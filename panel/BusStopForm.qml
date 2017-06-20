@@ -6,9 +6,11 @@ ListView {
     property alias api_key: bus_stop.api_key
     property alias stop: bus_stop.stop
     property alias track_filter: bus_stop.track_filter
+    property alias walkTime: bus_stop.walkTime
     property int fontsize: 27
     property int fontsize_normal: 20
     property int squaresize: 50
+
 
     BusStop {id: bus_stop}
     clip: true

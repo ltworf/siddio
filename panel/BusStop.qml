@@ -7,6 +7,7 @@ Item {
     property string track_filter: ''
     property string stop_id: ''
     property int update_interval: 30
+    property double walkTime: 0
 
     property string server_time
     property string server_date
@@ -80,7 +81,17 @@ Item {
                         var ttl = ((itemdate - serverdate) / 1000 / 60)
                         if (ttl <= 0)
                             continue
-                        buckets[item.sname + item.direction].eta += ttl + ' '
+                        if (walkTime) {
+                            var color
+                            if (ttl < Math.floor(walkTime))
+                                color = 'red'
+                            else if (ttl > Math.ceil(walkTime))
+                                color = 'green'
+                            else
+                                color = 'yellow'
+                            buckets[item.sname + item.direction].eta += '<font color="' + color + '">' + ttl + '</font> '
+                        } else
+                            buckets[item.sname + item.direction].eta += ttl + ' '
                     }
 
                     for (var k in buckets){

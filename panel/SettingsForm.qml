@@ -9,6 +9,7 @@ Item {
     property alias track_filter: txtTrackFilter.text
     property alias host: txtHomeControlHost.text
     property alias port: txtHomeControlPort.text
+    property alias walkTime: txtWalkTime.text
 
     property int fontsize: 27
     GridLayout {
@@ -68,6 +69,20 @@ Item {
             placeholderText: qsTr("A")
             text: 'AC'
             Layout.fillWidth: true
+        }
+
+        Label {
+            fontSizeMode: Text.HorizontalFit
+            font.pointSize: fontsize
+            text: qsTr('Walk time (min)')
+        }
+
+        TextField {
+            id: txtWalkTime
+            placeholderText: qsTr('Walking distance to the stop')
+            text: '5.5'
+            inputMethodHints: Qt.ImhDigitsOnly
+            validator: DoubleValidator{bottom: 0.1; top: 20}
         }
 
         Spacer {}
