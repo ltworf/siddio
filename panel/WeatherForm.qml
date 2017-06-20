@@ -11,39 +11,68 @@ Item {
         id: weather
     }
 
-    RowLayout {
-        anchors.fill: parent
-        spacing: 10
-        ColumnLayout {
-            Image {
-                    id: image1
-                    x: 10
-                    y: 10
-                    width: 128
-                    height: 128
-                    source: weather.image
-            }
-            RowLayout {
-                id: templayout
-                Label {
-                    fontSizeMode: Text.HorizontalFit;
-                    font.pointSize: fontsize;
-                    text: weather.low + '°'
-                }
-                Spacer {}
-                Label {
-                    fontSizeMode: Text.HorizontalFit;
-                    font.pointSize: fontsize;
-                    text: weather.high + '°'
-                }
-            }
-        }
-
-        ColumnLayout {
-            Label {fontSizeMode: Text.HorizontalFit; font.pointSize: fontsize; text: weather.sunrise}
-            Label {fontSizeMode: Text.HorizontalFit; font.pointSize: fontsize; text: weather.sunset}
-            Spacer {}
-            Label {fontSizeMode: Text.HorizontalFit; font.pointSize: fontsize; text: weather.wind_speed + weather.speed_unit}
-        }
+    Image {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        id: image1
+        width: 128
+        height: 128
+        source: weather.image
     }
+
+    Label {
+        id: sunrise
+        anchors.top: parent.top
+        anchors.right: parent.right
+        fontSizeMode: Text.HorizontalFit
+        font.pointSize: fontsize
+        text: weather.sunrise
+    }
+
+    Label {
+        id: sunset
+        anchors.right: parent.right
+        anchors.top: sunrise.bottom
+        fontSizeMode: Text.HorizontalFit
+        font.pointSize: fontsize
+        text: weather.sunset
+    }
+
+    Label {
+        id: wind
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        fontSizeMode: Text.HorizontalFit
+        font.pointSize: fontsize
+        text: weather.wind_speed
+    }
+
+    Label {
+        id: windunit
+        anchors.left: wind.right
+        anchors.bottom: parent.bottom
+        fontSizeMode: Text.HorizontalFit
+        font.pointSize: fontsize * 0.3
+        text: weather.speed_unit
+    }
+
+    Label {
+        id: lowtemp
+        anchors.bottom: parent.bottom
+        anchors.right: hightemp.left
+        fontSizeMode: Text.HorizontalFit;
+        font.pointSize: fontsize;
+        text: weather.low + '°'
+    }
+
+    Label {
+        id: hightemp
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        fontSizeMode: Text.HorizontalFit;
+        font.pointSize: fontsize;
+        text: weather.high + '°'
+    }
+
+
 }
