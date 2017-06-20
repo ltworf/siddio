@@ -35,15 +35,16 @@ ApplicationWindow {
             }
 
             Profiles { //placeholder
-                width: parent.width / 4
-                height: weather.height
                 anchors.top: parent.top
                 anchors.right: parent.right
+                anchors.left: weather.right
+                anchors.bottom: bus.top
                 host: settings.host
                 port: settings.port
             }
 
             BusStopForm {
+                id: bus
                 width: parent.width
                 anchors.bottom: parent.bottom
                 anchors.top: weather.bottom

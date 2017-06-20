@@ -4,47 +4,49 @@ import QtQuick.Layouts 1.0
 
 import siddio.control 1.0
 
-Rectangle {
+Item {
     property alias port: homecontrol.port
     property alias host: homecontrol.host
-    property int fontsize: 27
-
-    border.color: '#dddddd'
-    border.width: 1
-    color: "#33000000"
 
     HomeControlClient {
         id: homecontrol
     }
+    clip: true
 
-    Button {
+    Rectangle {
+        clip: true
+        border.color: '#dddddd'
+        border.width: 1
+        color: "#33000000"
+        anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.bottom: eveningProfile.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: parent.height / 2
-        background: Image {
-            source: 'qrc:/icons/weather-clear.png'
-            width: height
-        }
-        onClicked: homecontrol.activate('off')
-        id: offProfile
-        font.pointSize: fontsize
-    }
-
-    Button {
-        anchors.top: offProfile.bottom
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: parent.height / 2
-        background: Image {
-            source: 'qrc:/icons/weather-clear-night.png'
-            width: height
-        }
-        onClicked: homecontrol.activate('evening')
-        id: eveningProfile
-        font.pointSize: fontsize
-    }
+        width: parent.width * 0.8
 
+        Button {
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: parent.height / 2
+            width: parent.height / 2
+            background: Image {
+                source: 'qrc:/icons/weather-clear.png'
+                width: height
+            }
+            onClicked: homecontrol.activate('off')
+            id: offProfile
+        }
+
+        Button {
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: parent.height / 2
+            width: parent.height / 2
+            background: Image {
+                source: 'qrc:/icons/weather-clear-night.png'
+                width: height
+            }
+            onClicked: homecontrol.activate('evening')
+            id: eveningProfile
+        }
+    }
 }
