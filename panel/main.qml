@@ -18,11 +18,17 @@ ApplicationWindow {
         anchors.fill: parent
 
         Item {
-            id: secondPage
+            Clock {
+                anchors.top: parent.top
+                anchors.left: parent.left
+                id: clock
+                width: parent.width / 4 * 3
+                height: 50
+            }
             WeatherForm {
                 width: parent.width / 4 * 3
-                height: 175
-                anchors.top: parent.top
+                height: 145
+                anchors.top: clock.bottom
                 anchors.left: parent.left
                 id:weather
                 city: settings.city
