@@ -50,5 +50,6 @@
         <file>icons/profiles/reading.png</file>
         <file>icons/profiles/soft.png</file>
         <file>icons/profiles/speaker.png</file>
+        <file>Clock.qml</file>
     </qresource>
 </RCC>
