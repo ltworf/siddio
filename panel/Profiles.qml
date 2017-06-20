@@ -11,6 +11,7 @@ Rectangle {
 
     border.color: '#dddddd'
     border.width: 1
+    color: "#33000000"
 
     HomeControlClient {
         id: homecontrol

@@ -25,13 +25,13 @@ Item {
             }
             RowLayout {
                 id: templayout
-                Text {
+                Label {
                     fontSizeMode: Text.HorizontalFit;
                     font.pointSize: fontsize;
                     text: weather.low + '°'
                 }
                 Spacer {}
-                Text {
+                Label {
                     fontSizeMode: Text.HorizontalFit;
                     font.pointSize: fontsize;
                     text: weather.high + '°'

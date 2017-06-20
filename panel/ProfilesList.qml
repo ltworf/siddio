@@ -36,7 +36,7 @@ GridView {
         }
     }
 
-    header: Text {
+    header: Label {
         text: 'Profiles'
         font.pointSize: fontsize
     }
@@ -46,7 +46,7 @@ GridView {
     delegate: Button {
         text: name
         font.pointSize: fontsize * 0.7
-        background: Rectangle {
+        background: Item {
 //            color: 'yellow'
 //            border.color: 'red'
             Image {

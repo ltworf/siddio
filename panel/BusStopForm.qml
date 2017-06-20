@@ -13,7 +13,7 @@ ListView {
     BusStop {id: bus_stop}
     clip: true
 
-    header: Text {
+    header: Label {
         text: bus_stop.name
         font.pointSize: fontsize
     }
@@ -41,7 +41,7 @@ ListView {
             }
         }
 
-        Text {
+        Label {
             clip: true
             height: parent.height
             anchors.left: rect_name.right
@@ -55,7 +55,7 @@ ListView {
             wrapMode: Text.WordWrap
         }
 
-        Text {
+        Label {
             clip: true
             height: parent.height
             anchors.right: parent.right
