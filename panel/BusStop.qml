@@ -77,9 +77,12 @@ Item {
                         if (typeof(buckets[item.sname + item.direction]) == 'undefined') {
                             buckets[item.sname + item.direction] = item
                             buckets[item.sname + item.direction].eta = ''
+                            buckets[item.sname + item.direction].etalen = 0
                         }
                         var ttl = ((itemdate - serverdate) / 1000 / 60)
                         if (ttl <= 0)
+                            continue
+                        if (buckets[item.sname + item.direction].etalen++ > 2)
                             continue
                         if (walkTime) {
                             var color
