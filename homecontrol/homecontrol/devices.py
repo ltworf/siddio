@@ -103,8 +103,8 @@ def _devices(host: str, port: int):
         while len(data.split(b'\0')) != 4:
             data += s.recv(2048)
         name, descr, tags, _ = (i.decode('utf8') for i in data.split(b'\0'))
-        tags = set(tags.split(','))
-        r.append(Device(name, descr, tags, host, port, dev_id))
+        tags_set = set(tags.split(','))
+        r.append(Device(name, descr, tags_set, host, port, dev_id))
     s.close()
     return r
 
