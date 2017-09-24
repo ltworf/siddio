@@ -24,6 +24,7 @@ from syslog import *
 
 from configobj import ConfigObj
 import RPi.GPIO as GPIO
+from setproctitle import setproctitle
 
 
 class Commands(enum.Enum):
@@ -167,6 +168,7 @@ class AsyncServer(asyncore.dispatcher):
 
 
 def main():
+    setproctitle('iocontrol')
     openlog('iocontrol')
 
     try:

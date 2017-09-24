@@ -23,6 +23,7 @@ import sys
 from syslog import *
 
 from configobj import ConfigObj
+from setproctitle import setproctitle
 
 from homecontrol import profiles
 
@@ -70,6 +71,7 @@ class AsyncServer(asyncore.dispatcher):
 
 
 def main():
+    setproctitle('homecontrol')
     openlog('homecontrol')
     syslog(LOG_INFO,'Starting siddio-homecontrol')
     profiles.load_profiles('/etc/siddio/profiles.conf')
