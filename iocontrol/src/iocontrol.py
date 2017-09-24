@@ -21,6 +21,7 @@ import enum
 import socket
 import struct
 from syslog import *
+from typing import List
 
 from configobj import ConfigObj
 import RPi.GPIO as GPIO
@@ -37,7 +38,7 @@ class Commands(enum.Enum):
 
 
 class Device():
-    def __init__(self, name: str, description: str, tags, pin: int, state: bool, invert: bool):
+    def __init__(self, name: str, description: str, tags, pin: int, state: bool, invert: bool) -> None:
         self.name = name
         self.description = description
         self.pin = pin
@@ -64,7 +65,7 @@ class Device():
         return self.state
 
 
-def get_devices(filename='/etc/siddio/iocontrol.conf'):
+def get_devices(filename: str = '/etc/siddio/iocontrol.conf') -> List:
     '''
     Loads the configuration and returns a list of tuples in
     the form of (pin, initial_state, description).
@@ -93,12 +94,12 @@ def get_devices(filename='/etc/siddio/iocontrol.conf'):
 
 
 class AsyncConnection(asyncore.dispatcher_with_send):
-    def __init__(self, pair):
+    def __init__(self, pair) -> None:
         asyncore.dispatcher_with_send.__init__(self, pair[0])
         addr = pair[1]
         self.logid = '%s:%d' % addr
 
-    def _send_str(self, string):
+    def _send_str(self, string: str) -> None:
         data = string.encode('utf8')
         self.send(data + b'\0')
 
@@ -154,7 +155,7 @@ class AsyncConnection(asyncore.dispatcher_with_send):
 
 class AsyncServer(asyncore.dispatcher):
 
-    def __init__(self, host, port):
+    def __init__(self, host: str, port: int) -> None:
         asyncore.dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
         self.set_reuse_addr()

@@ -19,6 +19,7 @@ import collections
 import socket
 import struct
 from syslog import *
+from typing import List
 
 SETSTATE = b's'
 GETSTATE = b'g'
@@ -52,7 +53,7 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
                     self.properties[components[0]] = components[1]
             return self
 
-    def get_state(self):
+    def get_state(self) -> bool:
         '''
         returns the state of the device.
 
@@ -62,7 +63,7 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
             self.update()
         return self._state
 
-    def update(self):
+    def update(self) -> None:
         '''
         Queries the iocontrol to obtain the state of the device
         '''
@@ -72,7 +73,7 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
         self._state = s.recv(1) == b'\x01'
         s.close()
 
-    def switch(self, new_state: bool):
+    def switch(self, new_state: bool) -> None:
         if new_state == self.get_state():
             return
         self._state = new_state
@@ -84,7 +85,7 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
         s.close()
 
 
-def _devices(host: str, port: int):
+def _devices(host: str, port: int) -> List[Device]:
     r = []
     s = socket.socket(socket.AF_INET)
     s.connect((host, port))

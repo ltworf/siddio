@@ -17,6 +17,7 @@
 # author Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import collections
 from syslog import *
+from typing import Dict
 
 from configobj import ConfigObj
 from relational.relation import Relation, Header
@@ -25,10 +26,10 @@ from relational.parser import parse
 from homecontrol import devices
 
 
-_profiles = {}
+_profiles = {}  # type: Dict[str,Profile]
 
 
-def load_profiles(filename):
+def load_profiles(filename:str ) -> None:
     '''
     loads or reloads the profiles from configuration file
     '''
@@ -43,7 +44,7 @@ def load_profiles(filename):
         )
 
 
-def get_profile(name):
+def get_profile(name: str):
     return _profiles.get(name)
 
 
@@ -160,7 +161,7 @@ class Profile(collections.namedtuple('profile', ('name', 'onquery', 'offquery'))
         return on and off
 
 
-    def activate(self):
+    def activate(self) -> None:
         dev_dict, rel_devs_on, rel_devs_off = self._getrels()
 
         id_index = rel_devs_on.header.index('id')

@@ -52,7 +52,7 @@ class AsyncConnection(asyncore.dispatcher_with_send):
 
 class AsyncServer(asyncore.dispatcher):
 
-    def __init__(self, host, port):
+    def __init__(self, host: str, port: int) -> None:
         asyncore.dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -63,7 +63,7 @@ class AsyncServer(asyncore.dispatcher):
             syslog(LOG_ERR, 'Unable to bind socket %s:%d' % (host, port))
             sys.exit(1)
 
-    def handle_accept(self):
+    def handle_accept(self) -> None:
         pair = self.accept()
         if pair:
             sock, addr = pair
