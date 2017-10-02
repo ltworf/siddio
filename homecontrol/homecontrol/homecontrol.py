@@ -33,8 +33,14 @@ PROFILE_LIST = b'l'
 
 
 class AsyncConnection(asyncore.dispatcher_with_send):
+    def __init__(self, pair) -> None:
+        asyncore.dispatcher_with_send.__init__(self, pair[0])
+        addr = pair[1]
+        self.logid = '%s:%d' % addr
+
     def handle_read(self):
         command = self.recv(1)
+        syslog(LOG_DEBUG, '%s command: 0x%s' % (self.logid, command.hex()))
         if command == PROFILE_ACTIVATE:
             pname = self.recv(1024).decode('utf8')
             profile = profiles.get_profile(pname)
@@ -43,12 +49,12 @@ class AsyncConnection(asyncore.dispatcher_with_send):
             else:
                 syslog(LOG_INFO, 'Activating profile: %s' % pname)
                 profile.activate()
-            self.close()
         elif command == PROFILE_LIST:
             pnames = (pname.encode('utf8') for pname in profiles.get_profiles())
             self.send(b'\n'.join(pnames))
-            self.close()
-
+        else:
+            syslog(LOG_ERR, '%s invalid command: 0x%s' % (self.logid, command.hex()))
+        self.close()
 
 class AsyncServer(asyncore.dispatcher):
 
@@ -67,7 +73,7 @@ class AsyncServer(asyncore.dispatcher):
         pair = self.accept()
         if pair:
             sock, addr = pair
-            connection = AsyncConnection(sock)
+            connection = AsyncConnection(pair)
 
 
 def main():
