@@ -84,7 +84,7 @@ def main():
 
     conf = ConfigObj('/etc/siddio/homecontrol.conf')
     port = int(conf.get('Server', {}).get('port', 4040))
-    address = conf.get('Server', {}.get('address', '0.0.0.0')
+    address = conf.get('Server', {}).get('address', '0.0.0.0')
     server = AsyncServer(address, port)
     asyncore.loop()
 
