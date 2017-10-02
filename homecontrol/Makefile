@@ -27,5 +27,6 @@ install:
 	install -D -m644 homecontrol.service $${DESTDIR:-/}/lib/systemd/system/homecontrol.service
 	install -D -m644 profiles.conf $${DESTDIR:-/}/usr/share/doc/siddio-homecontrol/profiles.conf
 	install -D -m644 profiles.conf $${DESTDIR:-/}/etc/siddio/profiles.conf
+	install -D -m644 homecontrol.conf $${DESTDIR:-/}/etc/siddio/homecontrol.conf
 #         install -D relational_gui.py $${DESTDIR:-/}/usr/bin/relational-cli
 #         install -D relational-cli.1 $${DESTDIR:-/}/usr/share/man/man1/relational-cli.1

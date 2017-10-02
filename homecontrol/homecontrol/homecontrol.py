@@ -82,7 +82,10 @@ def main():
     syslog(LOG_INFO,'Starting siddio-homecontrol')
     profiles.load_profiles('/etc/siddio/profiles.conf')
 
-    server = AsyncServer('0.0.0.0', 4040)
+    conf = ConfigObj('/etc/siddio/homecontrol.conf')
+    port = int(conf.get('Server', {}).get('port', 4040))
+    address = conf.get('Server', {}.get('address', '0.0.0.0')
+    server = AsyncServer(address, port)
     asyncore.loop()
 
 
