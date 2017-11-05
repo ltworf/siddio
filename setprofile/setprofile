@@ -11,14 +11,16 @@ fi
 if test -z "$1" || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "    Usage:"
     echo $0 --list
-    echo $0 profilename
+    echo $0 profilename [profilename ...]
     exit 0
 fi
 
-if test "$1" = "--list"; then
-printf l | nc $HOST $PORT
-echo
-exit 0
-fi
-
-printf a$1 | nc $HOST $PORT
+while test -n "$1"; do
+    if test "$1" = "--list"; then
+        printf l | nc $HOST $PORT
+        echo
+        exit 0
+    fi
+    printf a$1 | nc $HOST $PORT
+    shift
+done
