@@ -8,11 +8,11 @@ if test -z "$HOST$PORT"; then
     . /etc/siddio/setprofile.conf
 fi
 
-if test -z "$1"; then
+if test -z "$1" || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "    Usage:"
     echo $0 --list
     echo $0 profilename
-    exit 1
+    exit 0
 fi
 
 if test "$1" = "--list"; then
