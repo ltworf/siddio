@@ -34,7 +34,7 @@ Item {
         interval: 1000 * 60 * 9 // 9 minutes
         running: api_key.length > 0
         onTriggered: {
-            console.log('Getting new token...')
+            console.log('[BusStop] Getting new token...')
             var http = new XMLHttpRequest()
             var url = 'https://api.vasttrafik.se:443/token'
             http.open('POST', url)
@@ -49,10 +49,10 @@ Item {
                         _token = response['access_token']
 
                         // Adjust interval accordingly to token expiration
-                        token_timer.interval = (response['expires_in'] - 60) * 1000
-                        console.log('Get new token in ' + token_timer.interval + 'ms')
+                        token_timer.interval = response['expires_in'] > 120 ? (response['expires_in'] - 60) * 1000 : 1
+                        console.log('[BusStop] Get new token in ' + token_timer.interval + 'ms')
                     } else {
-                        console.log("obtaining token error: " + http.status + http.responseText)
+                        console.log('[BusStop] obtaining token error: ' + http.status + http.responseText)
                     }
                 }
             }
@@ -60,7 +60,7 @@ Item {
     }
 
     function update_stop() {
-        console.log('update board')
+        console.log('[BusStop] update board')
         if (stop_id.length == 0) {
             items.clear()
             return
@@ -132,7 +132,7 @@ Item {
                     }
 
                 } else {
-                    console.log("error: " + http.status)
+                    console.log('[BusStop] update board error: ' + http.status)
                 }
             }
         }
@@ -150,7 +150,6 @@ Item {
         var http = new XMLHttpRequest()
         http.responseType = 'arraybuffer';
         var url = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?format=json&input=" + stop
-        console.log(url)
         http.open("GET", url);
         http.setRequestHeader('Authorization', 'Bearer ' + _token)
 
@@ -161,7 +160,7 @@ Item {
                     stop_id = data.id
                     name = data.name
                 } else {
-                    console.log("location error: " + http.status)
+                    console.log('[BusStop] location error: ' + http.status)
                 }
             }
         }
