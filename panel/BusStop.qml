@@ -13,6 +13,7 @@ Item {
     property string server_date
     property string server_stop
     property var items: items
+    property string _token
 
     ListModel {
         id: items
@@ -26,6 +27,38 @@ Item {
         onTriggered: update_stop()
     }
 
+    Timer {
+        id: token_timer
+        triggeredOnStart: true
+        repeat: true
+        interval: 1000 * 60 * 9 // 9 minutes
+        running: true
+        onTriggered: {
+            console.log('Getting new token...')
+            var http = new XMLHttpRequest()
+            var url = 'https://api.vasttrafik.se:443/token'
+            http.open('POST', url)
+            http.setRequestHeader('Authorization', 'Basic ' + api_key)
+            http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+            http.send('grant_type=client_credentials')
+
+            http.onreadystatechange = function() { // Call a function when the state changes.
+                if (http.readyState == XMLHttpRequest.DONE) {
+                    if (http.status == 200) {
+                        var response = JSON.parse(http.responseText)
+                        _token = response['access_token']
+
+                        // Adjust interval accordingly to token expiration
+                        token_timer.interval = (response['expires_in'] - 60) * 1000
+                        console.log('Get new token in ' + token_timer.interval + 'ms')
+                    } else {
+                        console.log("obtaining token error: " + http.status + http.responseText)
+                    }
+                }
+            }
+        }
+    }
+
     function update_stop() {
         console.log('update board')
         if (stop_id.length == 0) {
@@ -37,7 +70,6 @@ Item {
         http.responseType = 'arraybuffer';
         var url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?format=json&authKey=" + api_key + "&timeSpan=120&maxDeparturesPerLine=4&id=" + stop_id;
         http.open("GET", url);
-
 
         // Send the proper header information along with the request
         http.setRequestHeader("Connection", "close");
