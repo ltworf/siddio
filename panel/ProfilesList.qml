@@ -45,7 +45,7 @@ GridView {
     cellHeight: 138
     delegate: Button {
         text: name
-        font.pointSize: fontsize * 0.7
+        font.pointSize: fontsize * 0.4
         background: Item {
 //            color: 'yellow'
 //            border.color: 'red'
