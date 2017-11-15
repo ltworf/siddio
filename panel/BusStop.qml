@@ -32,7 +32,7 @@ Item {
         triggeredOnStart: true
         repeat: true
         interval: 1000 * 60 * 9 // 9 minutes
-        running: true
+        running: api_key.length > 0
         onTriggered: {
             console.log('Getting new token...')
             var http = new XMLHttpRequest()
@@ -68,11 +68,9 @@ Item {
 
         var http = new XMLHttpRequest()
         http.responseType = 'arraybuffer';
-        var url = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?format=json&authKey=" + api_key + "&timeSpan=120&maxDeparturesPerLine=4&id=" + stop_id;
+        var url = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?format=json&timeSpan=120&maxDeparturesPerLine=4&id=" + stop_id;
         http.open("GET", url);
-
-        // Send the proper header information along with the request
-        http.setRequestHeader("Connection", "close");
+        http.setRequestHeader('Authorization', 'Bearer ' + _token)
 
         http.onreadystatechange = function() { // Call a function when the state changes.
             items.clear()
@@ -142,22 +140,19 @@ Item {
     }
 
     onStopChanged: fetch_again()
-    onApi_keyChanged: fetch_again()
+    on_TokenChanged: fetch_again()
     onTrack_filterChanged: update_stop()
     onStop_idChanged: update_stop()
 
     function fetch_again() {
-        if (api_key.length == 0 || stop.length == 0)
+        if (stop.length == 0 || _token.length == 0)
             return
         var http = new XMLHttpRequest()
         http.responseType = 'arraybuffer';
-        var url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?format=json&authKey="+ api_key +"&input=" + stop
+        var url = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?format=json&input=" + stop
         console.log(url)
         http.open("GET", url);
-
-
-        // Send the proper header information along with the request
-        http.setRequestHeader("Connection", "close");
+        http.setRequestHeader('Authorization', 'Bearer ' + _token)
 
         http.onreadystatechange = function() { // Call a function when the state changes.
             if (http.readyState == XMLHttpRequest.DONE) {
@@ -166,7 +161,7 @@ Item {
                     stop_id = data.id
                     name = data.name
                 } else {
-                    console.log("error: " + http.status)
+                    console.log("location error: " + http.status)
                 }
             }
         }
