@@ -2,7 +2,8 @@ Source: siddio
 Priority: optional
 Maintainer: Salvo 'LtWorf' Tomaselli <tiposchi@tiscali.it>
 Homepage: https://github.com/ltworf/siddio
-Build-Depends: debhelper (>= 10), python3, dh-python
+Build-Depends: debhelper (>= 10), python3, dh-python, libmpv-dev, qt5-qmake, qtbase5-dev,
+ qtdeclarative5-dev
 Section: embedded
 Standards-Version: 3.9.8
 X-Python3-Version: >= 3.4
@@ -29,7 +30,8 @@ Description: siddio is a distributed home automation project
  sets the profiles.
 
 #Package: siddio-panel
-#Depends: qml-module-qtquick-controls2, qml-module-qtquick-templates2
+#Depends: qml-module-qtquick-controls2, qml-module-qtquick-templates2, qml-module-qtquick-layouts,
+#  qml-module-qtquick2, qml-module-qtgraphicaleffects, sound-theme-freedesktop
 #Architecture: any
 
 Package: siddio-setprofile
