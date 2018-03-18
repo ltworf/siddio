@@ -10,15 +10,16 @@ Item {
         volume: volume.value
 
         onMetadataChanged: {
-            if (key.toLowerCase().endsWith('title')) {
+            key.indexOf('title')
+            if (key.toLowerCase().indexOf('title') != -1) {
                 title.text = value
             }
 
-            if (key.toLowerCase().endsWith('description')) {
+            if (key.toLowerCase().indexOf('description') != -1) {
                 description.text = value
             }
 
-            if (key.toLowerCase().endsWith('name')) {
+            if (key.toLowerCase().indexOf('name') != -1) {
                 name.text = value
             }
         }
