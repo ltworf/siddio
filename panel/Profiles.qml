@@ -29,7 +29,7 @@ Item {
             height: 128
             width: 128
             background: Image {
-                source: 'qrc:/icons/weather-clear.png'
+                source: 'qrc:/icons/profiles/off.png'
                 width: height
             }
             onClicked: homecontrol.activate('off')
@@ -42,7 +42,7 @@ Item {
             height: 128
             width: 128
             background: Image {
-                source: 'qrc:/icons/weather-clear-night.png'
+                source: 'qrc:/icons/profiles/soft.png'
                 width: height
             }
             onClicked: homecontrol.activate('evening')
