@@ -55,5 +55,13 @@
         <file>Clock.qml</file>
         <file>icons/sections/settings.svgz</file>
         <file>icons/sections/timer.svgz</file>
+        <file>icons/sections/main.svgz</file>
+        <file>icons/sections/profiles.svgz</file>
+        <file>VerticalTabBar.qml</file>
+        <file>KitchenTimer.qml</file>
+        <file>Stats.qml</file>
+        <file>icons/sections/stats.svgz</file>
+        <file>icons/sections/video.svgz</file>
+        <file>icons/sections/music.svgz</file>
     </qresource>
 </RCC>

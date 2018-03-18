@@ -37,4 +37,4 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+ANDROID_PACKAGE_SOURCE_DIR = /media/salvo/3f608073-787e-4a12-838b-81cdbbb648ab/android/android-ndk-r10e
