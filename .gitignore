@@ -104,3 +104,5 @@ debian/siddio-homecontrol.postinst.debhelper
 debian/siddio-homecontrol.postrm.debhelper
 debian/*.debhelper
 .mypy_cache
+
+*.qmlc
