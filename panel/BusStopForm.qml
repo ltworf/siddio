@@ -47,6 +47,7 @@ ListView {
             clip: true
             height: parent.height
             anchors.left: rect_name.right
+            anchors.right: times.left
             anchors.top: parent.top
             width: parent.width - rect_name.width - eta.width
             text: direction
@@ -58,6 +59,7 @@ ListView {
         }
 
         Label {
+            id: times
             clip: true
             height: parent.height
             anchors.right: parent.right
