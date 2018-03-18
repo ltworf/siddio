@@ -6,8 +6,8 @@ Label {
 
     id: lblClock
     text: '00:00:00'
-    fontSizeMode: Text.HorizontalFit
-    font.pointSize: 100
+    horizontalAlignment: Text.AlignHCenter
+    font.pointSize: 40
     clip: true
 
     Timer {
