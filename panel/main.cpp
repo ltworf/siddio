@@ -11,10 +11,9 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     HomeControlClient cl;
-    AudioPlayer ring;
     QQmlApplicationEngine engine;
     qmlRegisterType<HomeControlClient>("siddio.control", 1, 0, "HomeControlClient");
-    qmlRegisterType<AudioPlayer>("siddio.control", 1, 0, "RingPlayer");
+    qmlRegisterType<AudioPlayer>("siddio.control", 1, 0, "MpvPlayer");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

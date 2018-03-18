@@ -20,7 +20,7 @@ ColumnLayout {
         formatted = minutes + ":" + secs
     }
 
-    RingPlayer {
+    MpvPlayer {
         id: player
     }
 
