@@ -8,6 +8,7 @@ Rectangle {
     z: 1
 
     ColumnLayout{
+        spacing: 2
         anchors.fill: parent
 
         Button {
