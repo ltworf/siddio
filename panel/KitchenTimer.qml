@@ -9,7 +9,7 @@ ColumnLayout {
     id: ktimer
 
     onSecondsChanged: {
-        var minutes = (seconds/60 | 0).toString()
+        var minutes = (Math.floor(seconds / 60)).toString()
         var secs = (seconds % 60).toString()
         if (minutes.length == 1)
             minutes = "0" + minutes
