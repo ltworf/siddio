@@ -3,7 +3,11 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    homecontrolclient.cpp
+    homecontrolclient.cpp \
+    audioplayer.cpp \
+    metadata.cpp
+
+LIBS += -lmpv
 
 RESOURCES += qml.qrc
 
@@ -30,7 +34,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    homecontrolclient.h
+    homecontrolclient.h \
+    audioplayer.h \
+    metadata.h
 
 DISTFILES += \
     android/AndroidManifest.xml \
