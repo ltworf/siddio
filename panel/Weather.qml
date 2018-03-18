@@ -91,7 +91,7 @@ Item {
                                 title = data['title']
                                 sunrise = data['astronomy']['sunrise']
                                 sunset = data['astronomy']['sunset']
-                                wind_speed = data['wind']['speed']
+                                wind_speed = Math.floor(data['wind']['speed'])
                                 speed_unit = data['units']['speed']
                                 temperature_unit = data['units']['temperature']
                             } catch (err) {
