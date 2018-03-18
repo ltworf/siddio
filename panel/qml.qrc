@@ -63,5 +63,6 @@
         <file>icons/sections/stats.svgz</file>
         <file>icons/sections/video.svgz</file>
         <file>icons/sections/music.svgz</file>
+        <file>Jazz.qml</file>
     </qresource>
 </RCC>

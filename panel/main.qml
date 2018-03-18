@@ -84,7 +84,7 @@ ApplicationWindow {
 
         Stats {}
 
-//        Music {}
+        Jazz {}
 
 //        Video {}
 
