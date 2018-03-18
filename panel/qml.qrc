@@ -41,6 +41,7 @@
         <file>Profiles.qml</file>
         <file>ProfilesList.qml</file>
         <file>icons/profiles/off.png</file>
+        <file>icons/profiles/guitar.png</file>
         <file>icons/profiles/evening.png</file>
         <file>icons/profiles/board_games.png</file>
         <file>icons/profiles/building.png</file>
@@ -50,6 +51,9 @@
         <file>icons/profiles/reading.png</file>
         <file>icons/profiles/soft.png</file>
         <file>icons/profiles/speaker.png</file>
+        <file>icons/profiles/musicoff.png</file>
         <file>Clock.qml</file>
+        <file>icons/sections/settings.svgz</file>
+        <file>icons/sections/timer.svgz</file>
     </qresource>
 </RCC>
