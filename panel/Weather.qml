@@ -6,6 +6,7 @@ Item {
     property string city
     property string low
     property string high
+    property string temp
     property string image: 'qrc:/icons/weather-none-available.png'
     property string title
     property string sunrise
@@ -83,6 +84,7 @@ Item {
                         if (http.status == 200) {
                             try {
                                 var data = JSON.parse(http.responseText)['query']['results']['channel']
+                                temp = data['item']['condition']['temp']
                                 low = data['item']['forecast'][0]['low']
                                 high = data['item']['forecast'][0]['high']
                                 set_image(data['item']['forecast'][0]['text'])
