@@ -6,8 +6,7 @@ import siddio.control 1.0
 
 ApplicationWindow {
     visible: true
-    width: 800
-    height: 480
+    visibility: "FullScreen"
     title: qsTr("siddio")
 
     Secrets {id: secrets}
@@ -93,14 +92,5 @@ ApplicationWindow {
             id: settings
         }
     }
-
-//    PageIndicator {
-//        id: indicator
-//        count: view.count
-//        currentIndex: view.currentIndex
-
-//        anchors.bottom: view.bottom
-//        anchors.horizontalCenter: parent.horizontalCenter
-//    }
 
 }
