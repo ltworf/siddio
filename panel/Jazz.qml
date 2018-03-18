@@ -31,6 +31,7 @@ Item {
         Label {
             id: title
             font.pointSize: 30
+            wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             Layout.preferredWidth: parent.width
         }
@@ -38,6 +39,7 @@ Item {
         Label {
             id: description
             font.pointSize: 15
+            wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             Layout.preferredWidth: parent.width
         }
@@ -45,6 +47,7 @@ Item {
         Label {
             id: name
             font.pointSize: 15
+            wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             Layout.preferredWidth: parent.width
         }
