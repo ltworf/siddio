@@ -32,10 +32,6 @@ ApplicationWindow {
                 id: bus
                 Layout.preferredHeight: parent.height
                 Layout.preferredWidth: parent.width / 2
-//                width: parent.width
-//                anchors.bottom: parent.bottom
-//                anchors.top: weather.bottom
-//                anchors.left: parent.left
                 stop: settings.stop
                 api_key: secrets.vasttrafik_api_key
                 track_filter: settings.track_filter
