@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
+import siddio.control 1.0
+
 ColumnLayout {
     property int seconds: 0
     property string formatted: "00:00"
@@ -18,6 +20,10 @@ ColumnLayout {
         formatted = minutes + ":" + secs
     }
 
+    RingPlayer {
+        id: player
+    }
+
     Timer {
         id: t
         onTriggered: {
@@ -25,7 +31,7 @@ ColumnLayout {
             ktimer.seconds -= 1
             if (ktimer.seconds <= 0) {
                 t.stop()
-                //TODO play a sound
+                player.open('/usr/share/sounds/freedesktop/stereo/phone-incoming-call.oga')
             }
         }
         interval: 1000
