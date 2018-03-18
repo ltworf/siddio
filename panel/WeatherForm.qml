@@ -13,7 +13,7 @@ Item {
 
     Image {
         anchors.top: parent.top
-        anchors.left: parent.left
+        anchors.left: windunit.right
         id: image1
         width: 128
         height: 128

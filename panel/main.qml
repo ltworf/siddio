@@ -55,7 +55,7 @@ ApplicationWindow {
                 }
                 WeatherForm {
                     Layout.fillWidth: true
-                    height: 160
+                    height: 180
                     id:weather
                     city: settings.city
                 }
