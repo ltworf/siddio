@@ -1,0 +1,2 @@
+# put this in /etc/udev/rules.d/backlight-permissions.rules
+SUBSYSTEM=="backlight",RUN+="/bin/chmod 666 /sys/class/backlight/%k/brightness /sys/class/backlight/%k/bl_power"
