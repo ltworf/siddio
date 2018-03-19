@@ -5,7 +5,8 @@ CONFIG += c++11
 SOURCES += main.cpp \
     homecontrolclient.cpp \
     audioplayer.cpp \
-    metadata.cpp
+    metadata.cpp \
+    pibacklight.cpp
 
 LIBS += -lmpv
 
@@ -36,7 +37,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     homecontrolclient.h \
     audioplayer.h \
-    metadata.h
+    metadata.h \
+    pibacklight.h
 
 DISTFILES += \
     android/AndroidManifest.xml \
