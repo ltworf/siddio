@@ -87,6 +87,43 @@ ApplicationWindow {
         SettingsForm {
             id: settings
         }
+
+
+        //Power saving
+        onCurrentIndexChanged: {
+            pwrsavet.restart()
+        }
+
+        Timer {
+            id: pwrsavet
+            repeat: true
+            onTriggered: {
+                //Go to the last item
+                blankpage.last_index = view.currentIndex
+                view.currentIndex = view.count - 1
+                backlight.powersave()
+                pwrsavet.running = false
+            }
+            interval: 1000 * 60 * 20 //20 minutes
+            running: true
+        }
+
+        PiBacklight {
+            id: backlight
+        }
+
+        Rectangle { //Go here when in power saving mode
+            id: blankpage
+            property int last_index
+            color: "black"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    view.currentIndex = blankpage.last_index
+                    backlight.resume()
+                }
+            }
+        }
     }
 
 }
