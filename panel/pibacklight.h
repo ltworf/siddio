@@ -39,6 +39,7 @@ public slots:
     void powersave();
     void resume();
     void blankscreen();
+    void unblankscreen();
     void setBrightness(unsigned int brightness);
     unsigned int brightness();
     unsigned int max();

@@ -89,6 +89,13 @@ void PiBacklight::blankscreen() {
     QProcess::startDetached("xset dpms force off");
 }
 
+void PiBacklight::unblankscreen() {
+    QProcess::startDetached("xset s off");
+    QProcess::startDetached("xset -dpms");
+    QProcess::startDetached("xset s noblank");
+}
+
+
 void PiBacklight::resume() {
     set_brightness(_brightness);
 }

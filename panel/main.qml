@@ -122,6 +122,7 @@ ApplicationWindow {
                 onClicked: {
                     view.currentIndex = blankpage.last_index
                     backlight.resume()
+                    backlight.unblankscreen()
                 }
             }
         }
