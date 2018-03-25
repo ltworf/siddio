@@ -38,6 +38,7 @@ signals:
 public slots:
     void powersave();
     void resume();
+    void blankscreen();
     void setBrightness(unsigned int brightness);
     unsigned int brightness();
     unsigned int max();

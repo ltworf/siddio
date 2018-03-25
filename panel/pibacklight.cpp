@@ -1,6 +1,7 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QFile>
+#include <QProcess>
 
 /*
 This file is part of siddio.
@@ -82,6 +83,10 @@ void set_brightness(unsigned int newval) {
 
 void PiBacklight::powersave() {
     set_brightness(0);
+}
+
+void PiBacklight::blankscreen() {
+    QProcess::startDetached("xset dpms force off");
 }
 
 void PiBacklight::resume() {
