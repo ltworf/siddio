@@ -102,6 +102,7 @@ ApplicationWindow {
                 blankpage.last_index = view.currentIndex
                 view.currentIndex = view.count - 1
                 backlight.powersave()
+                backlight.blankscreen()
                 pwrsavet.running = false
             }
             interval: 1000 * 60 * 20 //20 minutes
