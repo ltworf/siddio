@@ -113,7 +113,7 @@ def _devices(host: str, port: int) -> List[Device]:
 def devices():
     r = []
     #TODO read hosts from configuration file
-    hosts = (('10.9', 4141),)
+    hosts = (('10.9', 4141), ('10.11', 4141))
     for host, port in hosts:
         syslog(LOG_INFO, 'Querying iocontrol %s:%d for devices' % (host, port))
         devs = _devices(host, port)
