@@ -111,6 +111,7 @@ ApplicationWindow {
 
         PiBacklight {
             id: backlight
+            brightness: 255
         }
 
         Rectangle { //Go here when in power saving mode
