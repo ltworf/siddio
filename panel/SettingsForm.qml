@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
+import siddio.control 1.0
+
 Item {
 
     property alias city: txtCity.text
@@ -10,6 +12,7 @@ Item {
     property alias host: txtHomeControlHost.text
     property alias port: txtHomeControlPort.text
     property alias walkTime: txtWalkTime.text
+    property alias brightness: sldBrightness.value
 
     property int fontsize: 27
     GridLayout {
@@ -115,9 +118,35 @@ Item {
         TextField {
             id: txtHomeControlHost
             placeholderText: qsTr("A")
-            text: '10.9'
+            text: '10.2'
             Layout.fillWidth: true
         }
+
+        Spacer {}
+
+        Label {
+            fontSizeMode: Text.HorizontalFit;
+            font.pointSize: fontsize;
+            text: qsTr('Screen')
+        }
+
+        Label {
+            fontSizeMode: Text.HorizontalFit;
+            font.pointSize: fontsize;
+            text: qsTr('Brightness')
+        }
+
+        PiBacklight {
+            id: backlight
+        }
+
+        Slider {
+            id: sldBrightness
+            from: 0
+            to: backlight.max
+            value: backlight.brightness
+        }
+
 
         Spacer{}
         Spacer{}
