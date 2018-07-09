@@ -40,6 +40,7 @@ Item {
         ColumnLayout {
             spacing: 15
             Layout.leftMargin: width / 10
+            Layout.bottomMargin: height / 15
 
             TimeSelector {
                 onTriggered: player.open(player.url)
@@ -50,12 +51,13 @@ Item {
                 from: 0
                 to: 100
                 value: 80 //TODO store this
-                Layout.preferredHeight: 240
+                Layout.preferredHeight: 140
+                Layout.preferredWidth: 140
             }
 
             Button {
                 text: "stop"
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.preferredWidth: 140
                 antialiasing: false
                 onClicked: {
                     player.stop()
@@ -104,6 +106,7 @@ Item {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                 Layout.leftMargin: width / 6
                 Layout.rightMargin: width / 10
+                Layout.bottomMargin: height / 10
                 Button {
                     property string url: 'http://www.radioswissjazz.ch/live/aacp.m3u'
                     Layout.fillWidth: true
