@@ -45,7 +45,7 @@ Item {
                 source: 'qrc:/icons/profiles/soft.png'
                 width: height
             }
-            onClicked: homecontrol.activate('evening')
+            onClicked: homecontrol.activate('transfer')
             id: eveningProfile
         }
     }
