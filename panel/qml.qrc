@@ -63,5 +63,6 @@
         <file>icons/sections/video.svgz</file>
         <file>icons/sections/music.svgz</file>
         <file>Jazz.qml</file>
+        <file>TimeSelector.qml</file>
     </qresource>
 </RCC>
