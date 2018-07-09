@@ -8,7 +8,7 @@ Item {
     MpvPlayer {
         id: player
         volume: volume.value
-        property string url: ''
+        property string url: 'http://livemp3.radioradicale.it/live.mp3'
 
         onUrlChanged: {
             name.text = ''
@@ -33,65 +33,77 @@ Item {
         }
     }
 
-    ColumnLayout {
+    RowLayout {
         anchors.fill: parent
 
-        Label {
-            id: title
-            font.pointSize: 30
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-            Layout.preferredWidth: parent.width
+        // Left section: timer, volume and stop button
+        ColumnLayout {
+            spacing: 15
+            Layout.leftMargin: width / 10
+
+            TimeSelector {
+                onTriggered: player.open(player.url)
+            }
+
+            Dial {
+                id: volume
+                from: 0
+                to: 100
+                value: 80 //TODO store this
+                Layout.preferredHeight: 240
+            }
+
+            Button {
+                text: "stop"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                antialiasing: false
+                onClicked: {
+                    player.stop()
+                    name.text = ''
+                    title.text = ''
+                    description.text = ''
+                }
+                font.pointSize: 15
+            }
+
         }
 
-        Label {
-            id: description
-            font.pointSize: 15
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-            Layout.preferredWidth: parent.width
-        }
-
-        Label {
-            id: name
-            font.pointSize: 15
-            wrapMode: Text.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-            Layout.preferredWidth: parent.width
-        }
-
-        RowLayout {
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            RowLayout {
-                spacing: 15
-                Layout.leftMargin: width / 10
-                Dial {
-                    id: volume
-                    from: 0
-                    to: 100
-                    value: 80 //TODO store this
-                    Layout.preferredHeight: 240
+        // Right sectiong
+        ColumnLayout {
+            ColumnLayout {
+                Label {
+                    id: title
+                    font.pointSize: 30
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.fillWidth: true
                 }
 
-                Button {
-                    text: "stop"
-                    onClicked: {
-                        player.stop()
-                        player.url = ''
-                        name.text = ''
-                        title.text = ''
-                        description.text = ''
-                    }
+                Label {
+                    id: description
                     font.pointSize: 15
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.fillWidth: true
+                }
+
+                Label {
+                    id: name
+                    font.pointSize: 15
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.fillWidth: true
                 }
             }
 
+            Item {
+                Layout.fillHeight: true
+            }
+
             ColumnLayout {
+                Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                 Layout.leftMargin: width / 6
                 Layout.rightMargin: width / 10
-                Layout.fillWidth: true
-                Layout.fillHeight: true
                 Button {
                     property string url: 'http://www.radioswissjazz.ch/live/aacp.m3u'
                     Layout.fillWidth: true
@@ -119,4 +131,5 @@ Item {
             }
         }
     }
+
 }
