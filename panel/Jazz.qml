@@ -14,7 +14,6 @@ Item {
             name.text = ''
             title.text = ''
             description.text = ''
-            player.open(url)
         }
 
         onMetadataChanged: {
@@ -111,25 +110,37 @@ Item {
                     property string url: 'http://www.radioswissjazz.ch/live/aacp.m3u'
                     Layout.fillWidth: true
                     text: 'Radio Swiss Jazz'
-                    onClicked: player.url = url
+                    onClicked: {
+                        player.url = url
+                        player.open(url)
+                    }
                 }
                 Button {
                     property string url: 'http://www.radiosvizzeraclassica.ch/live/mp3.m3u'
                     Layout.fillWidth: true
                     text: 'Radio Svizzera Classica'
-                    onClicked: player.url = url
+                    onClicked: {
+                        player.url = url
+                        player.open(url)
+                    }
                 }
                 Button {
                     property string url: 'http://livemp3.radioradicale.it/live.mp3'
                     Layout.fillWidth: true
                     text: 'Radio radicale'
-                    onClicked: player.url = url
+                    onClicked: {
+                        player.url = url
+                        player.open(url)
+                    }
                 }
                 Button {
                     property string url: 'http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk'
                     Layout.fillWidth: true
                     text: 'BBC World Service'
-                    onClicked: player.url = url
+                    onClicked: {
+                        player.url = url
+                        player.open(url)
+                    }
                 }
             }
         }
