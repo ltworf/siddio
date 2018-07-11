@@ -7,7 +7,7 @@ Label {
     id: lblClock
     text: '00:00:00'
     horizontalAlignment: Text.AlignHCenter
-    font.pointSize: 40
+    font.pointSize: 38
     clip: true
 
     Timer {
