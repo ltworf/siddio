@@ -25,7 +25,7 @@ ListView {
         width: parent.width
 
         id: dev_rect
-        color: model.present ? (model.misses ? 'yellow': 'green') : 'red'
+        color: model.present ? (model.misses ? 'yellow': 'green') : (model.arp ? 'orange' : 'black')
         Label {
             text: model.name
             font.pointSize: fontsize_normal
