@@ -101,7 +101,8 @@ Item {
                 Layout.fillHeight: true
             }
 
-            ColumnLayout {
+            GridLayout {
+                columns: 2
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                 Layout.leftMargin: width / 6
                 Layout.rightMargin: width / 10
@@ -118,7 +119,7 @@ Item {
                 Button {
                     property string url: 'http://www.radiosvizzeraclassica.ch/live/mp3.m3u'
                     Layout.fillWidth: true
-                    text: 'Radio Svizzera Classica'
+                    text: 'Svizzera Classica'
                     onClicked: {
                         player.url = url
                         player.open(url)
@@ -137,6 +138,42 @@ Item {
                     property string url: 'http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk'
                     Layout.fillWidth: true
                     text: 'BBC World Service'
+                    onClicked: {
+                        player.url = url
+                        player.open(url)
+                    }
+                }
+                Button {
+                    property string url: 'http://live02.rfi.fr/rfimonde-64.mp3'
+                    Layout.fillWidth: true
+                    text: 'RFI'
+                    onClicked: {
+                        player.url = url
+                        player.open(url)
+                    }
+                }
+                Button {
+                    property string url: 'http://icestreaming.rai.it/1.mp3'
+                    Layout.fillWidth: true
+                    text: 'RAI Radio 1'
+                    onClicked: {
+                        player.url = url
+                        player.open(url)
+                    }
+                }
+                Button {
+                    property string url: 'http://icestreaming.rai.it/2.mp3'
+                    Layout.fillWidth: true
+                    text: 'RAI Radio 2'
+                    onClicked: {
+                        player.url = url
+                        player.open(url)
+                    }
+                }
+                Button {
+                    property string url: 'http://icestreaming.rai.it/3.mp3'
+                    Layout.fillWidth: true
+                    text: 'RAI Radio 3'
                     onClicked: {
                         player.url = url
                         player.open(url)
