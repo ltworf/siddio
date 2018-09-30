@@ -5,6 +5,7 @@
 #include "homecontrolclient.h"
 #include "audioplayer.h"
 #include "pibacklight.h"
+#include "videoplayer.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<HomeControlClient>("siddio.control", 1, 0, "HomeControlClient");
     qmlRegisterType<AudioPlayer>("siddio.control", 1, 0, "MpvPlayer");
     qmlRegisterType<PiBacklight>("siddio.control", 1, 0, "PiBacklight");
+    qmlRegisterType<VideoPlayer>("siddio.control", 1, 0, "VideoPlayer");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

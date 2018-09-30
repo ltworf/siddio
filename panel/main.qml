@@ -80,9 +80,11 @@ ApplicationWindow {
 
         Stats {}
 
-        Jazz {}
+        Jazz {
+            id: radio
+        }
 
-//        Video {}
+        Video {}
 
         SettingsForm {
             id: settings
