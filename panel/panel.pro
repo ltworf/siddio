@@ -6,7 +6,8 @@ SOURCES += main.cpp \
     homecontrolclient.cpp \
     audioplayer.cpp \
     metadata.cpp \
-    pibacklight.cpp
+    pibacklight.cpp \
+    videoplayer.cpp
 
 LIBS += -lmpv
 
@@ -38,7 +39,8 @@ HEADERS += \
     homecontrolclient.h \
     audioplayer.h \
     metadata.h \
-    pibacklight.h
+    pibacklight.h \
+    videoplayer.h
 
 DISTFILES += \
     android/AndroidManifest.xml \
