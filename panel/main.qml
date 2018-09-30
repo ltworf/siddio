@@ -21,6 +21,7 @@ ApplicationWindow {
 
     SwipeView {
         id: view
+        orientation: "Vertical"
         currentIndex: 0
         anchors.top: parent.top
         anchors.right: tabBar.left
