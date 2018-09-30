@@ -63,8 +63,6 @@
         <file>icons/sections/video.svgz</file>
         <file>icons/sections/music.svgz</file>
         <file>Jazz.qml</file>
-        <file>icons/playback/media-playback-start.svgz</file>
-        <file>icons/playback/media-playback-stop.svgz</file>
         <file>TimeSelector.qml</file>
         <file>Video.qml</file>
     </qresource>
