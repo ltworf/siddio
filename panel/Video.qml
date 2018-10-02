@@ -20,9 +20,18 @@ ListView {
 
     clip: true
 
-    header: Label {
-        text: 'Playlist'
-        font.pointSize: fontsize
+    header: RowLayout {
+        spacing: 30
+        Label {
+            text: 'Playlist'
+            font.pointSize: fontsize
+        }
+
+        Button {
+            text: '↺'
+            font.pointSize: fontsize
+            onClicked: fetch_again()
+        }
     }
     model: items
     delegate: Button {
@@ -31,14 +40,6 @@ ListView {
         onClicked: {
             videoplayer.play(model.url)
         }
-    }
-
-    Timer {
-        triggeredOnStart: true
-        interval: 1000 * update_interval_secs;
-        running: true;
-        repeat: true
-        onTriggered: fetch_again()
     }
 
     function fetch_again() {
