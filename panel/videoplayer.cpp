@@ -32,6 +32,7 @@ VideoPlayer::VideoPlayer(QObject* parent): QObject(parent)
 void VideoPlayer::play(QString url) {
     QStringList params;
     params << "--fs";
+    params << "--vo=gpu";
     params << url;
     QProcess mpv(this);
     mpv.start("/usr/bin/mpv", params, 0);
