@@ -75,8 +75,9 @@ ApplicationWindow {
             port: settings.port
         }
 
-        KitchenTimer {
-            id: kitchentimer
+        RowLayout {
+            KitchenTimer {}
+            KitchenTimer {}
         }
 
         Stats {}
