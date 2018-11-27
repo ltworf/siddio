@@ -75,9 +75,16 @@ ApplicationWindow {
             port: settings.port
         }
 
-        ColumnLayout {
-            KitchenTimer {}
-            KitchenTimer {}
+        RowLayout {
+            ColumnLayout {
+                KitchenTimer {}
+                KitchenTimer {}
+            }
+
+            OffTimer{
+                host: settings.host
+                port: settings.port
+            }
         }
 
         Stats {}

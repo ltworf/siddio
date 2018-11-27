@@ -67,5 +67,6 @@
         <file>Video.qml</file>
         <file>icons/profiles/food.png</file>
         <file>icons/profiles/bass.png</file>
+        <file>OffTimer.qml</file>
     </qresource>
 </RCC>
