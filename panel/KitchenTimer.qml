@@ -7,7 +7,7 @@ import siddio.control 1.0
 ColumnLayout {
     property int seconds: 0
     property string formatted: "00:00"
-    property int fontsize: 90
+    property int fontsize: 50
     id: ktimer
 
     onSecondsChanged: {
