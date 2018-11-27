@@ -75,7 +75,7 @@ ApplicationWindow {
             port: settings.port
         }
 
-        RowLayout {
+        ColumnLayout {
             KitchenTimer {}
             KitchenTimer {}
         }
