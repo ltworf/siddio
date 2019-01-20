@@ -27,6 +27,7 @@ ListView {
     property string media_list: "http://10.0.0.2/lista"
     property int fontsize: 27
     property int fontsize_normal: 20
+    property alias playing: videoplayer.playing
 
     VideoPlayer {
         id: videoplayer
