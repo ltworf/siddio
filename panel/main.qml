@@ -89,7 +89,7 @@ ApplicationWindow {
 
         Stats {}
 
-        Jazz {
+        InternetRadio {
             id: radio
         }
 

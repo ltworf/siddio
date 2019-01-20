@@ -62,7 +62,7 @@
         <file>icons/sections/stats.svgz</file>
         <file>icons/sections/video.svgz</file>
         <file>icons/sections/music.svgz</file>
-        <file>Jazz.qml</file>
+        <file>InternetRadio.qml</file>
         <file>TimeSelector.qml</file>
         <file>Video.qml</file>
         <file>icons/profiles/food.png</file>
