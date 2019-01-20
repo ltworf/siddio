@@ -18,7 +18,6 @@ Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 
 
-#include <QProcess>
 #include <QStringList>
 
 #include "videoplayer.h"
@@ -26,16 +25,40 @@ Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 VideoPlayer::VideoPlayer(QObject* parent): QObject(parent)
 {
-
+    _playing = false;
+    emit playingChanged(_playing);
 }
 
 void VideoPlayer::play(QString url) {
+    if (mpv)
+        return;
+
     QStringList params;
     params << "--fs";
     params << "--vo=gpu";
     params << url;
-    QProcess mpv(this);
-    mpv.start("/usr/bin/mpv", params, nullptr);
-    mpv.waitForStarted(-1);
-    mpv.waitForFinished(-1);
+    mpv = new QProcess(this);
+
+    connect(
+        mpv,
+        QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+        this,
+        &VideoPlayer::finished
+    );
+
+    _playing = true;
+    emit playingChanged(_playing);
+
+    mpv->start("/usr/bin/mpv", params, nullptr);
+}
+
+void VideoPlayer::finished(int exit_code, QProcess::ExitStatus status) {
+    _playing = false;
+    emit playingChanged(_playing);
+    delete mpv;
+    mpv = nullptr;
+}
+
+bool VideoPlayer::playing() {
+    return _playing;
 }

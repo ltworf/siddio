@@ -23,15 +23,29 @@ Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 #include <QObject>
 #include <QString>
+#include <QProcess>
 
 class VideoPlayer: public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(
+            bool playing
+            READ playing
+            NOTIFY playingChanged
+    )
+
 public:
     explicit VideoPlayer(QObject *parent = nullptr);
+signals:
+    void playingChanged(bool);
 public slots:
     void play(QString url);
-
+    bool playing();
+private slots:
+    void finished(int, QProcess::ExitStatus);
+private:
+    bool _playing = false;
+    QProcess *mpv = nullptr;
 };
 
 #endif // VIDEOPLAYER_H
