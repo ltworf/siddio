@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with siddio. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (C) 2018  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 
 
@@ -35,7 +35,7 @@ void VideoPlayer::play(QString url) {
     params << "--vo=gpu";
     params << url;
     QProcess mpv(this);
-    mpv.start("/usr/bin/mpv", params, 0);
+    mpv.start("/usr/bin/mpv", params, nullptr);
     mpv.waitForStarted(-1);
     mpv.waitForFinished(-1);
 }

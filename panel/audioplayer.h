@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Scurpiddu. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (C) 2018  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 
 #ifndef AUDIOPLAYER_H
@@ -30,7 +30,7 @@ class AudioPlayer : public QObject
 {
     Q_OBJECT
 public:
-    AudioPlayer(QObject *parent = 0);
+    AudioPlayer(QObject *parent = nullptr);
     ~AudioPlayer();
 
     enum States {
@@ -67,7 +67,7 @@ public:
     )
 
 private:
-    mpv_handle *mpv = NULL;
+    mpv_handle *mpv = nullptr;
     void handle_mpv_event(mpv_event*);
     double _duration;
     double _progress;

@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with siddio. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (C) 2018  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 
 
@@ -28,7 +28,7 @@ class VideoPlayer: public QObject
 {
     Q_OBJECT
 public:
-    explicit VideoPlayer(QObject *parent = NULL);
+    explicit VideoPlayer(QObject *parent = nullptr);
 public slots:
     void play(QString url);
 
