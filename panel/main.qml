@@ -112,7 +112,9 @@ ApplicationWindow {
             id: radio
         }
 
-        Video {}
+        Video {
+            id: video
+        }
 
         SettingsForm {
             id: settings
@@ -136,7 +138,7 @@ ApplicationWindow {
                 pwrsavet.running = false
             }
             interval: 1000 * 60 * 20 //20 minutes
-            running: true
+            running: ! video.playing //Activate powersaving only when there is no video running
         }
 
         PiBacklight {
