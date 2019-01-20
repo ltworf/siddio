@@ -130,6 +130,8 @@ ApplicationWindow {
             id: pwrsavet
             repeat: true
             onTriggered: {
+                if (video.playing)
+                    return;
                 //Go to the last item
                 blankpage.last_index = view.currentIndex
                 view.currentIndex = view.count - 1
@@ -138,7 +140,7 @@ ApplicationWindow {
                 pwrsavet.running = false
             }
             interval: 1000 * 60 * 20 //20 minutes
-            running: ! video.playing //Activate powersaving only when there is no video running
+            running: true
         }
 
         PiBacklight {
