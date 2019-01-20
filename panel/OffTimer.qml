@@ -27,6 +27,8 @@ ColumnLayout {
     property alias port: homecontrol.port
     property alias host: homecontrol.host
 
+    property InternetRadio radio
+
     property int seconds: 0
     property string formatted: "00:00"
     property int fontsize: 40
@@ -51,6 +53,7 @@ ColumnLayout {
             seconds -= 1
             if (seconds <= 0) {
                 homecontrol.activate("off")
+                radio.stop()
             }
         }
         interval: 1000

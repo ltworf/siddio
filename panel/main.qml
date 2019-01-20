@@ -102,6 +102,7 @@ ApplicationWindow {
             OffTimer{
                 host: settings.host
                 port: settings.port
+                radio: radio
             }
         }
 
