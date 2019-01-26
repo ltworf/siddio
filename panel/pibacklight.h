@@ -29,7 +29,7 @@ class PiBacklight : public QObject
     Q_PROPERTY(unsigned int max READ max NOTIFY maxChanged)
 
 public:
-    explicit PiBacklight(QObject *parent = 0);
+    explicit PiBacklight(QObject *parent = nullptr);
 
 signals:
     void maxChanged(unsigned int max);
