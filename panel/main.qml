@@ -135,8 +135,6 @@ ApplicationWindow {
                 //Go to the last item
                 blankpage.last_index = view.currentIndex
                 view.currentIndex = view.count - 1
-                backlight.powersave()
-                backlight.blankscreen()
                 pwrsavet.running = false
             }
             interval: 1000 * 60 * 20 //20 minutes
@@ -146,6 +144,7 @@ ApplicationWindow {
         PiBacklight {
             id: backlight
             brightness: 255
+            powersave: view.currentIndex == view.count - 1
         }
 
         Rectangle { //Go here when in power saving mode
@@ -155,8 +154,6 @@ ApplicationWindow {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    backlight.unblankscreen()
-                    backlight.resume()
                     view.currentIndex = blankpage.last_index
                 }
             }

@@ -81,8 +81,23 @@ void set_brightness(unsigned int newval) {
         qDebug() << "Unable to open device " BRIGHTNESS " in write mode";
 }
 
-void PiBacklight::powersave() {
-    set_brightness(0);
+bool PiBacklight::powersave() {
+    return _powersave;
+}
+
+void PiBacklight::setPowersave(bool newval) {
+    if (newval == this->_powersave)
+        return;
+    this->_powersave = newval;
+    emit powersaveChanged(this->_powersave);
+
+    if (this->_powersave) {
+        set_brightness(0);
+        blankscreen();
+    } else {
+        unblankscreen();
+        set_brightness(_brightness);
+    }
 }
 
 void PiBacklight::blankscreen() {
@@ -93,11 +108,6 @@ void PiBacklight::unblankscreen() {
     QProcess::startDetached("xset s off");
     QProcess::startDetached("xset -dpms");
     QProcess::startDetached("xset s noblank");
-}
-
-
-void PiBacklight::resume() {
-    set_brightness(_brightness);
 }
 
 unsigned int PiBacklight::brightness() {

@@ -27,6 +27,7 @@ class PiBacklight : public QObject
     Q_OBJECT
     Q_PROPERTY(unsigned int brightness READ brightness WRITE setBrightness NOTIFY brightnessChanged)
     Q_PROPERTY(unsigned int max READ max NOTIFY maxChanged)
+    Q_PROPERTY(bool powersave READ powersave WRITE setPowersave NOTIFY powersaveChanged)
 
 public:
     explicit PiBacklight(QObject *parent = nullptr);
@@ -34,10 +35,11 @@ public:
 signals:
     void maxChanged(unsigned int max);
     void brightnessChanged(unsigned int brightness);
+    void powersaveChanged(bool);
 
 public slots:
-    void powersave();
-    void resume();
+    bool powersave();
+    void setPowersave(bool);
     void blankscreen();
     void unblankscreen();
     void setBrightness(unsigned int brightness);
@@ -47,6 +49,7 @@ public slots:
 private:
     unsigned int _max;
     unsigned int _brightness;
+    bool _powersave;
 };
 
 #endif // PIBACKLIGHT_H
