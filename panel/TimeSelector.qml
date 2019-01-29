@@ -23,7 +23,7 @@ import QtQuick.Layouts 1.0
 GridLayout {
     property int hours: 7
     property int minutes: 0
-    property bool enabled: false
+    property alias enabled: enablebutton.checked
     signal triggered
 
     columns: 2
@@ -99,9 +99,9 @@ GridLayout {
 
     Button {
         checkable: true
+        id: enablebutton
         text: 'Alarm'
         Layout.columnSpan: 2
         Layout.fillWidth: true
-        onClicked: parent.enabled = checked
     }
 }
