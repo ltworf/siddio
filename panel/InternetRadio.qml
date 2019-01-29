@@ -20,6 +20,7 @@ Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
+import Qt.labs.settings 1.0
 
 import siddio.control 1.0
 
@@ -29,6 +30,14 @@ Item {
         name.text = ''
         title.text = ''
         description.text = ''
+    }
+
+    Settings {
+        property alias internet_radio_volume: player.volume
+        property alias internet_radio_url: player.url
+        property alias internet_radio_alarm_enabled: alarm.enabled
+        property alias internet_radio_alarm_hours: alarm.hours
+        property alias internet_radio_alarm_minutes: alarm.minutes
     }
 
     MpvPlayer {
@@ -68,6 +77,7 @@ Item {
             Layout.bottomMargin: height / 15
 
             TimeSelector {
+                id: alarm
                 onTriggered: player.open(player.url)
             }
 
