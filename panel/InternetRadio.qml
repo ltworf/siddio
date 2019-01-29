@@ -33,7 +33,7 @@ Item {
     }
 
     Settings {
-        property alias internet_radio_volume: player.volume
+        property alias internet_radio_volume: volume.value
         property alias internet_radio_url: player.url
         property alias internet_radio_alarm_enabled: alarm.enabled
         property alias internet_radio_alarm_hours: alarm.hours
