@@ -130,6 +130,7 @@ Item {
                 Layout.bottomMargin: height / 10
                 Button {
                     property string url: 'http://www.radioswissjazz.ch/live/aacp.m3u'
+                    highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'Radio Swiss Jazz'
                     onClicked: {
@@ -139,6 +140,7 @@ Item {
                 }
                 Button {
                     property string url: 'http://www.radiosvizzeraclassica.ch/live/mp3.m3u'
+                    highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'Svizzera Classica'
                     onClicked: {
@@ -148,6 +150,7 @@ Item {
                 }
                 Button {
                     property string url: 'http://livemp3.radioradicale.it/live.mp3'
+                    highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'Radio radicale'
                     onClicked: {
@@ -157,6 +160,7 @@ Item {
                 }
                 Button {
                     property string url: 'http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk'
+                    highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'BBC World Service'
                     onClicked: {
@@ -166,6 +170,7 @@ Item {
                 }
                 Button {
                     property string url: 'http://live02.rfi.fr/rfimonde-64.mp3'
+                    highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'RFI'
                     onClicked: {
@@ -175,6 +180,7 @@ Item {
                 }
                 Button {
                     property string url: 'http://icestreaming.rai.it/1.mp3'
+                    highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'RAI Radio 1'
                     onClicked: {
@@ -184,6 +190,7 @@ Item {
                 }
                 Button {
                     property string url: 'http://icestreaming.rai.it/2.mp3'
+                    highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'RAI Radio 2'
                     onClicked: {
@@ -193,6 +200,7 @@ Item {
                 }
                 Button {
                     property string url: 'http://icestreaming.rai.it/3.mp3'
+                    highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'RAI Radio 3'
                     onClicked: {
