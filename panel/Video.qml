@@ -56,7 +56,9 @@ ListView {
     delegate: Button {
         width: parent.width
         text: model.url
+        enabled: model.url.startsWith('http')
         onClicked: {
+            highlighted = true
             videoplayer.play(model.url)
         }
     }
