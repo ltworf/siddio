@@ -44,6 +44,7 @@ ListView {
     clip: true
 
     header: RowLayout {
+        width: parent.width
         spacing: 30
         Label {
             text: 'Playlist'
@@ -62,6 +63,7 @@ ListView {
             to: 100
             onValueChanged: videoplayer.volume = value
             stepSize: 2
+            Layout.fillWidth: true
 
             Settings {
                 property alias video_volume: volume.value
@@ -91,7 +93,6 @@ ListView {
         enabled: model.url.startsWith('http')
         onClicked: {
             highlighted = true
-            console.log("PLAYING VIDEO")
             videoplayer.play(model.url)
         }
     }
