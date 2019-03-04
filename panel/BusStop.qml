@@ -61,7 +61,7 @@ Item {
             http.send('grant_type=client_credentials')
 
             http.onreadystatechange = function() { // Call a function when the state changes.
-                if (http.readyState == XMLHttpRequest.DONE) {
+                if (http.readyState === XMLHttpRequest.DONE) {
                     if (http.status == 200) {
                         var response = JSON.parse(http.responseText)
                         _token = response['access_token']
