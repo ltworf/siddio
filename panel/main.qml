@@ -49,6 +49,7 @@ ApplicationWindow {
         RowLayout {
             BusStopForm {
                 id: bus
+                enabled: view.currentIndex == 0
                 Layout.preferredHeight: parent.height
                 Layout.preferredWidth: parent.width / 2
                 stop: settings.stop

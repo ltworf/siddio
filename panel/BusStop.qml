@@ -26,6 +26,7 @@ Item {
     property string stop_id: ''
     property int update_interval: 30
     property double walkTime: 0
+    property bool enabled: true
 
     property string server_time
     property string server_date
@@ -38,9 +39,9 @@ Item {
     }
 
     Timer {
-        triggeredOnStart: false
+        triggeredOnStart: true
         interval: 1000 * update_interval
-        running: stop_id.length > 0;
+        running: enabled && stop_id.length > 0
         repeat: true
         onTriggered: update_stop()
     }

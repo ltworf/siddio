@@ -25,6 +25,7 @@ ListView {
     property alias stop: bus_stop.stop
     property alias track_filter: bus_stop.track_filter
     property alias walkTime: bus_stop.walkTime
+    property alias enabled: bus_stop.enabled
     property int fontsize: 27
     property int fontsize_normal: 20
     property int squaresize: 50
