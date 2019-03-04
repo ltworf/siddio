@@ -34,16 +34,27 @@ class VideoPlayer: public QObject
             NOTIFY playingChanged
     )
 
+    Q_PROPERTY(
+            int volume
+            READ volume
+            WRITE setVolume
+            NOTIFY volumeChanged
+    )
+
 public:
     explicit VideoPlayer(QObject *parent = nullptr);
 signals:
     void playingChanged(bool);
+    void volumeChanged(int);
 public slots:
     void play(QString url);
     bool playing();
+    int volume();
+    void setVolume(int volume);
 private slots:
     void finished(int, QProcess::ExitStatus);
 private:
+    int _volume = 100;
     bool _playing = false;
     QProcess *mpv = nullptr;
 };

@@ -19,6 +19,7 @@ Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
+import Qt.labs.settings 1.0
 
 import siddio.control 1.0
 
@@ -28,6 +29,9 @@ ListView {
     property int fontsize: 27
     property int fontsize_normal: 20
     property alias playing: videoplayer.playing
+    property int volume
+
+    onVolumeChanged: console.log(volume)
 
     VideoPlayer {
         id: videoplayer
@@ -51,6 +55,17 @@ ListView {
             font.pointSize: fontsize
             onClicked: fetch_again()
         }
+
+        Slider {
+            id: volume
+            from: 0
+            to: 100
+            onValueChanged: videoplayer.volume = value
+
+            Settings {
+                property alias video_volume: volume.value
+            }
+        }
     }
     model: items
     delegate: Button {
@@ -59,6 +74,7 @@ ListView {
         enabled: model.url.startsWith('http')
         onClicked: {
             highlighted = true
+            console.log("PLAYING VIDEO")
             videoplayer.play(model.url)
         }
     }

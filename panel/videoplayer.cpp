@@ -36,6 +36,7 @@ void VideoPlayer::play(QString url) {
     QStringList params;
     params << "--fs";
     params << "--vo=gpu";
+    params << "--volume" << QString::number(this->_volume);
     params << url;
     mpv = new QProcess(this);
 
@@ -61,4 +62,13 @@ void VideoPlayer::finished(int exit_code, QProcess::ExitStatus status) {
 
 bool VideoPlayer::playing() {
     return _playing;
+}
+
+void VideoPlayer::setVolume(int volume) {
+    this->_volume = volume;
+    emit volumeChanged(volume);
+}
+
+int VideoPlayer::volume(){
+    return this->_volume;
 }
