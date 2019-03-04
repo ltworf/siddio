@@ -71,7 +71,6 @@ ColumnLayout {
     }
 
     Button {
-        Layout.preferredWidth: contentWidth
         text: "+10"
         font.pointSize: fontsize * 0.8
         onClicked: seconds += 60 * 10
