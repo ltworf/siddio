@@ -61,9 +61,26 @@ ListView {
             from: 0
             to: 100
             onValueChanged: videoplayer.volume = value
+            stepSize: 2
 
             Settings {
                 property alias video_volume: volume.value
+                property alias video_max: volume.to
+            }
+        }
+
+        Label {
+            text: volume.value
+        }
+
+        Button {
+            text: "Boost"
+            highlighted: volume.to === 130
+            onClicked: {
+                if (volume.to === 100)
+                    volume.to = 130
+                else
+                    volume.to = 100
             }
         }
     }
