@@ -5,33 +5,6 @@
         <file>qtquickcontrols2.conf</file>
         <file>Weather.qml</file>
         <file>WeatherForm.qml</file>
-        <file>icons/weather-clear-night.png</file>
-        <file>icons/weather-clear.png</file>
-        <file>icons/weather-clouds-night.png</file>
-        <file>icons/weather-clouds.png</file>
-        <file>icons/weather-few-clouds-night.png</file>
-        <file>icons/weather-few-clouds.png</file>
-        <file>icons/weather-fog.png</file>
-        <file>icons/weather-freezing-rain.png</file>
-        <file>icons/weather-hail.png</file>
-        <file>icons/weather-many-clouds.png</file>
-        <file>icons/weather-mist.png</file>
-        <file>icons/weather-none-available.png</file>
-        <file>icons/weather-overcast.png</file>
-        <file>icons/weather-showers-day.png</file>
-        <file>icons/weather-showers-night.png</file>
-        <file>icons/weather-showers-scattered-day.png</file>
-        <file>icons/weather-showers-scattered-night.png</file>
-        <file>icons/weather-showers-scattered.png</file>
-        <file>icons/weather-showers.png</file>
-        <file>icons/weather-snow-rain.png</file>
-        <file>icons/weather-snow-scattered-day.png</file>
-        <file>icons/weather-snow-scattered-night.png</file>
-        <file>icons/weather-snow-scattered.png</file>
-        <file>icons/weather-snow.png</file>
-        <file>icons/weather-storm-day.png</file>
-        <file>icons/weather-storm-night.png</file>
-        <file>icons/weather-storm.png</file>
         <file>main.cpp</file>
         <file>Spacer.qml</file>
         <file>SettingsForm.qml</file>
