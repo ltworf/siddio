@@ -44,35 +44,12 @@ Item {
         onTriggered: fetch_again()
     }
 
-    function set_image(text) {
-        //TODO Breezy
-        var night = false //TODO
-        if (text === 'Sunny' || text === 'Clear')
-            image = 'qrc:/icons/weather-clear.png'
-        else if (text === 'Rain')
-            image = 'qrc:/icons/weather-showers.png';
-        else if (text === 'Mostly Cloudy')
-            image = 'qrc:/icons/weather-overcast.png';
-        else if (text === 'Mostly Sunny')
-            image = 'qrc:/icons/weather-few-clouds.png';
-        else if (text === 'Partly Cloudy')
-            image = 'qrc:/icons/weather-clouds.png';
-        else if (text === 'Scattered Showers')
-            image = 'qrc:/icons/weather-showers-scattered-day.png';
-        else if (text === 'Showers')
-            image = 'qrc:/icons/weather-showers.png';
-        else if (text === 'Scattered Thunderstorms' || text === 'Thunderstorms')
-            image = 'qrc:/icons/weather-storm.png';
-        else if (text === 'Cloudy')
-            image = 'qrc:/icons/weather-clouds.png';
-        else if (text === 'Rain And Snow')
-            image = 'qrc:/icons/weather-snow-rain.png';
-        else if (text === 'Snow')
-            image = 'qrc:/icons/weather-snow.png';
-        else {
-            image = 'qrc:/icons/weather-none-available.png'
-            console.log(text)
-        }
+    function set_image(code) {
+        if (code.length === 1)
+            code = '0' + code
+
+        image = 'qrc:/icons/' + code + '.png'
+
     }
 
     function set_blank() {
@@ -90,7 +67,7 @@ Item {
     function fetch_again() {
         if (city === '')
             return
-        var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + city + "%22)%20and%20u%3D'c'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
+        var url = "http://weather.service.msn.com/data.aspx?weasearchstr=goteborg&culture=en-en&weadegreetype=C&src=msn"
         var http = new XMLHttpRequest()
         http.responseType = 'arraybuffer';
         http.open("GET", url);
@@ -101,17 +78,45 @@ Item {
                     if (http.readyState === XMLHttpRequest.DONE) {
                         if (http.status == 200) {
                             try {
-                                var data = JSON.parse(http.responseText)['query']['results']['channel']
-                                temp = data['item']['condition']['temp']
-                                low = data['item']['forecast'][0]['low']
-                                high = data['item']['forecast'][0]['high']
-                                set_image(data['item']['forecast'][0]['text'])
-                                title = data['title']
-                                sunrise = data['astronomy']['sunrise']
-                                sunset = data['astronomy']['sunset']
-                                wind_speed = Math.floor(data['wind']['speed'])
-                                speed_unit = data['units']['speed']
-                                temperature_unit = data['units']['temperature']
+                                // Do some poor man parsing, since parsing XML is so hard
+                                var data = http.responseText
+                                var begin = data.indexOf('<current ')
+                                var end = data.indexOf('>', begin)
+                                var items = data.substr(begin + 9, end - begin - 9 - 2).split('" ')
+                                var dictionary = {}
+                                for (var i = 0; i < items.length; i++) {
+                                    var q = items[i].split('=')
+                                    var key = q[0]
+                                    var value = q[1]
+                                    value = value.substr(1, value.length) // Remove the leftover quote sign
+                                    dictionary[key] = value
+                                }
+
+                                begin = data.indexOf('<forecast ')
+                                end = data.indexOf('>', begin)
+                                items = data.substr(begin + 10, end - begin - 10 - 2).split('" ')
+                                for (i = 0; i < items.length; i++) {
+                                    q = items[i].split('=')
+                                    key = q[0]
+                                    value = q[1]
+                                    value = value.substr(1, value.length) // Remove the leftover quote sign
+                                    dictionary[key] = value
+                                }
+
+
+                                temp = dictionary.temperature
+                                low = dictionary.low
+                                high = dictionary.high
+                                set_image(dictionary.skycode)
+                                title = dictionary.observationpoint
+                                var w = dictionary.windspeed.split(' ')
+                                wind_speed = w[0]
+                                speed_unit = w[1]
+                                temperature_unit = 'C'
+
+
+
+
                             } catch (err) {
                                 set_blank()
                             }
