@@ -27,8 +27,7 @@ Item {
     property string temp
     property string image: 'qrc:/icons/weather-none-available.png'
     property string title
-    property string sunrise
-    property string sunset
+    property string feels_like
     property int update_interval : 10
     property string temperature_unit
     property string speed_unit
@@ -113,9 +112,7 @@ Item {
                                 wind_speed = w[0]
                                 speed_unit = w[1]
                                 temperature_unit = 'C'
-
-
-
+                                feels_like = dictionary.feelslike
 
                             } catch (err) {
                                 set_blank()

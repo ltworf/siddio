@@ -39,21 +39,12 @@ Item {
     }
 
     Label {
-        id: sunrise
+        id: percepita
         anchors.top: parent.top
         anchors.right: parent.right
         fontSizeMode: Text.HorizontalFit
         font.pointSize: fontsize
-        text: weather.sunrise
-    }
-
-    Label {
-        id: sunset
-        anchors.right: parent.right
-        anchors.top: sunrise.bottom
-        fontSizeMode: Text.HorizontalFit
-        font.pointSize: fontsize
-        text: weather.sunset
+        text: 'Perc.: ' + weather.feels_like + '° ' + weather.temperature_unit
     }
 
     Label {
