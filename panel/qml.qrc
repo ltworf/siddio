@@ -77,5 +77,6 @@
         <file>icons/08.png</file>
         <file>icons/11.png</file>
         <file>icons/12.png</file>
+        <file>icons/weather-none-available.png</file>
     </qresource>
 </RCC>
