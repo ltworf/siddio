@@ -44,10 +44,65 @@ Item {
     }
 
     function set_image(code) {
-        if (code.length === 1)
-            code = '0' + code
+        var dictionary = {}
 
-        image = 'qrc:/icons/' + code + '.png'
+        dictionary["0"] = "17"
+        dictionary["1"] = "17"
+        dictionary["2"] = "17"
+        dictionary["3"] = "17"
+        dictionary["4"] = "17"
+        dictionary["17"] = "17"
+        dictionary["35"] = "17"
+
+        dictionary["37"] = "15"
+        dictionary["38"] = "15"
+
+        dictionary["47"] = "16"
+
+        dictionary["32"] =  "01"
+        dictionary["31"] =  "33"
+
+        dictionary["27"] =  "34"
+        dictionary["29"] =  "35"
+        dictionary["33"] =  "36"
+
+        dictionary["20"] = "11"
+//        21 - Haze
+//        22 - Smoke
+
+        dictionary["26"] = "07"
+        dictionary["28"] = "03"
+        dictionary["30"] = "04"
+        dictionary["34"] = "06"
+
+        dictionary["36"] = "30"
+        dictionary["39"] = "14"
+        dictionary["41"] = "20"
+//        dictionary["44"] - N/A
+        dictionary["45"] = "39"
+//        dictionary["46"] = "
+        dictionary["5"] = "29"
+        dictionary["6"] = "25"
+        dictionary["7"] = "25"
+        dictionary["10"] = "25"
+        dictionary["8"] = "31"
+        dictionary["9"] = "31"
+        dictionary["11"] = "14"
+        dictionary["12"] = "12"
+        dictionary["13"] = "21"
+        dictionary["14"] = "19"
+        dictionary["16"] = "22"
+        dictionary["42"] = "23"
+        dictionary["43"] = "25"
+        dictionary["15"] = "26"
+        dictionary["18"] = "13"
+        dictionary["40"] = "13"
+//        19 - Dust
+        dictionary["23"] = "32"
+        dictionary["24"] = "32"
+        dictionary["25"] = "24"
+
+        image = 'qrc:/icons/' + dictionary[code] + '.png'
 
     }
 
