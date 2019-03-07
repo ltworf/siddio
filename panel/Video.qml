@@ -31,8 +31,6 @@ ListView {
     property alias playing: videoplayer.playing
     property int volume
 
-    onVolumeChanged: console.log(volume)
-
     VideoPlayer {
         id: videoplayer
     }
