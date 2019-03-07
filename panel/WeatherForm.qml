@@ -39,6 +39,12 @@ Item {
     }
 
     Label {
+        anchors.top: image1.top
+        anchors.left: image1.left
+        text: weather.description
+    }
+
+    Label {
         id: percepita
         anchors.top: parent.top
         anchors.right: parent.right

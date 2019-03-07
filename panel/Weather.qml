@@ -32,6 +32,8 @@ Item {
     property string temperature_unit
     property string speed_unit
     property string wind_speed
+    property string description
+    property string precip
 
     onCityChanged: fetch_again()
 
@@ -46,61 +48,13 @@ Item {
     function set_image(code) {
         var dictionary = {}
 
-        dictionary["0"] = "17"
-        dictionary["1"] = "17"
-        dictionary["2"] = "17"
-        dictionary["3"] = "17"
-        dictionary["4"] = "17"
-        dictionary["17"] = "17"
-        dictionary["35"] = "17"
-
-        dictionary["37"] = "15"
-        dictionary["38"] = "15"
-
-        dictionary["47"] = "16"
-
-        dictionary["32"] =  "01"
-        dictionary["31"] =  "33"
-
-        dictionary["27"] =  "34"
-        dictionary["29"] =  "35"
-        dictionary["33"] =  "36"
-
-        dictionary["20"] = "11"
-//        21 - Haze
-//        22 - Smoke
-
-        dictionary["26"] = "07"
-        dictionary["28"] = "03"
-        dictionary["30"] = "04"
-        dictionary["34"] = "06"
-
-        dictionary["36"] = "30"
-        dictionary["39"] = "14"
-        dictionary["41"] = "20"
-//        dictionary["44"] - N/A
-        dictionary["45"] = "39"
-//        dictionary["46"] = "
-        dictionary["5"] = "29"
-        dictionary["6"] = "25"
-        dictionary["7"] = "25"
-        dictionary["10"] = "25"
-        dictionary["8"] = "31"
-        dictionary["9"] = "31"
-        dictionary["11"] = "14"
-        dictionary["12"] = "12"
-        dictionary["13"] = "21"
-        dictionary["14"] = "19"
-        dictionary["16"] = "22"
-        dictionary["42"] = "23"
-        dictionary["43"] = "25"
-        dictionary["15"] = "26"
-        dictionary["18"] = "13"
-        dictionary["40"] = "13"
-//        19 - Dust
-        dictionary["23"] = "32"
-        dictionary["24"] = "32"
-        dictionary["25"] = "24"
+        dictionary["Pioggia"] = "12"
+        dictionary["Rovesci"] = "13"
+        dictionary["Pioggia leggera"] = "14"
+        dictionary["Sereno"] = "01"
+        dictionary["Neve"] = "19"
+        dictionary["Leggera nevicata"] = "20"
+        dictionary["Prevalentemente soleggiato"] = "03"
 
         image = 'qrc:/icons/' + dictionary[code] + '.png'
 
@@ -121,7 +75,7 @@ Item {
     function fetch_again() {
         if (city === '')
             return
-        var url = "http://weather.service.msn.com/data.aspx?weasearchstr=goteborg&culture=en-en&weadegreetype=C&src=msn"
+        var url = "http://weather.service.msn.com/data.aspx?weasearchstr=goteborg&culture=it-it&weadegreetype=C&src=msn"
         var http = new XMLHttpRequest()
         http.responseType = 'arraybuffer';
         http.open("GET", url);
@@ -147,6 +101,7 @@ Item {
                                 }
 
                                 begin = data.indexOf('<forecast ')
+                                begin = data.indexOf('<forecast ', begin) //1st refers to yesterday
                                 end = data.indexOf('>', begin)
                                 items = data.substr(begin + 10, end - begin - 10 - 2).split('" ')
                                 for (i = 0; i < items.length; i++) {
@@ -161,13 +116,15 @@ Item {
                                 temp = dictionary.temperature
                                 low = dictionary.low
                                 high = dictionary.high
-                                set_image(dictionary.skycode)
+                                set_image(dictionary.skytext)
                                 title = dictionary.observationpoint
                                 var w = dictionary.windspeed.split(' ')
                                 wind_speed = w[0]
                                 speed_unit = w[1]
                                 temperature_unit = 'C'
                                 feels_like = dictionary.feelslike
+                                description = dictionary.skytext
+                                precip = dictionary.precip
 
                             } catch (err) {
                                 set_blank()
