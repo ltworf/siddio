@@ -87,26 +87,29 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
 
 def _devices(host: str, port: int) -> List[Device]:
     r = []
-    s = socket.socket(socket.AF_INET)
-    s.connect((host, port))
+    try:
+        s = socket.socket(socket.AF_INET)
+        s.connect((host, port))
 
-    s.send(GETCOUNT)
-    fmt = '!B'
-    count = struct.unpack(fmt,s.recv(1))[0]
-    for i in range(count):
-        dev_id = struct.pack(fmt, i)
-        s.send(GETNAME + dev_id +
-               GETDESCR + dev_id +
-               GETTAGS + dev_id)
+        s.send(GETCOUNT)
+        fmt = '!B'
+        count = struct.unpack(fmt,s.recv(1))[0]
+        for i in range(count):
+            dev_id = struct.pack(fmt, i)
+            s.send(GETNAME + dev_id +
+                GETDESCR + dev_id +
+                GETTAGS + dev_id)
 
-        # Read until the required data is over
-        data = b''
-        while len(data.split(b'\0')) != 4:
-            data += s.recv(2048)
-        name, descr, tags, _ = (i.decode('utf8') for i in data.split(b'\0'))
-        tags_set = set(tags.split(','))
-        r.append(Device(name, descr, tags_set, host, port, dev_id))
-    s.close()
+            # Read until the required data is over
+            data = b''
+            while len(data.split(b'\0')) != 4:
+                data += s.recv(2048)
+            name, descr, tags, _ = (i.decode('utf8') for i in data.split(b'\0'))
+            tags_set = set(tags.split(','))
+            r.append(Device(name, descr, tags_set, host, port, dev_id))
+        s.close()
+    except Exception as e:
+        syslog(LOG_WARNING, 'Connection problem with %s:%d %e' % (host, port, e)
     return r
 
 
