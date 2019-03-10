@@ -56,6 +56,10 @@ Item {
         dictionary["Leggera nevicata"] = "20"
         dictionary["Prevalentemente soleggiato"] = "03"
         dictionary["Pioggia leggera e neve"] = "25"
+        dictionary["Nuvoloso"] = "07"
+        dictionary["In prevalenza nuvoloso"] = "06"
+        dictionary["Soleggiato"] = "01"
+        dictionary["Parzialmente sereno"] = "04"
 
         image = 'qrc:/icons/' + dictionary[code] + '.png'
 
