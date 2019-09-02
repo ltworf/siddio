@@ -1,0 +1,13 @@
+[Unit]
+Description=Camera service
+Documentation=man:lightdm(1)
+After=multi-user.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=/home/salvo/siddio/camera/app.py
+Restart=always
+User=pi
+ProtectSystem=full
