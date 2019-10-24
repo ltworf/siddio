@@ -100,13 +100,13 @@ void AudioPlayer::setVolume(double v) {
 }
 
 void AudioPlayer::open(QByteArray path) {
-    const char *args[] = {"loadfile", path, NULL};
+    const char *args[] = {"loadfile", path, nullptr};
     mpv_command_async(mpv, 0, args);
 }
 
 void AudioPlayer::seek(double position) {
     const char* value = QString::number(position).toStdString().c_str();
-    const char *args[] = {"seek", value, "absolute", NULL};
+    const char *args[] = {"seek", value, "absolute", nullptr};
     mpv_command_async(mpv, 0, args);
 }
 
@@ -128,7 +128,7 @@ void AudioPlayer::playpause() {
 
 void AudioPlayer::stop() {
     _setState(AudioPlayer::States::STOPPED);
-    const char *args[] = {"stop", NULL};
+    const char *args[] = {"stop", nullptr};
     mpv_command_async(mpv, 0, args);
 }
 
@@ -213,7 +213,7 @@ void AudioPlayer::handle_mpv_event(mpv_event *event)
                     break;
                 default:
                     ;
-            };
+            }
 
             if (name == "time-pos") {
                 emit progressChanged(value);
@@ -247,7 +247,7 @@ void AudioPlayer::handle_mpv_event(mpv_event *event)
             }
         case MPV_EVENT_SHUTDOWN:
             mpv_terminate_destroy(mpv);
-            mpv = NULL;
+            mpv = nullptr;
             break;
         default:
             break;
