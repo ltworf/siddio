@@ -31,9 +31,9 @@ ColumnLayout {
     onSecondsChanged: {
         var minutes = (Math.floor(seconds / 60)).toString()
         var secs = (seconds % 60).toString()
-        if (minutes.length == 1)
+        if (minutes.length === 1)
             minutes = "0" + minutes
-        if (secs.length == 1)
+        if (secs.length === 1)
             secs = "0" + secs
         formatted = minutes + ":" + secs
     }
