@@ -19,16 +19,33 @@ Copyright (C) 2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 
 #include <QDebug>
+#include <QStringList>
+#include <QProcess>
 
 #include "usbkiller.h"
 
 UsbKiller::UsbKiller(QObject *parent) : QObject(parent)
 {
-
+    this->act();
 }
 
 void UsbKiller::act() {
     qDebug() << "PLAYERS"    << this->users;
+    QStringList params;
+
+    params << "/usr/sbin/uhubctl";
+    params << "-p" << "2";
+    params << "-a";
+
+    if (this->users)
+        params << "on";
+    else
+        params << "off";
+
+    QProcess proc;
+
+    proc.start("/usr/bin/sudo", params, nullptr);
+    proc.waitForFinished();
 }
 
 void UsbKiller::stop() {
