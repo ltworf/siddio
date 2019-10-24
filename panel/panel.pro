@@ -7,6 +7,7 @@ SOURCES += main.cpp \
     audioplayer.cpp \
     metadata.cpp \
     pibacklight.cpp \
+    usbkiller.cpp \
     videoplayer.cpp
 
 LIBS += -lmpv
@@ -40,6 +41,7 @@ HEADERS += \
     audioplayer.h \
     metadata.h \
     pibacklight.h \
+    usbkiller.h \
     videoplayer.h
 
 DISTFILES += \

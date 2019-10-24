@@ -20,6 +20,7 @@ Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 
 #include <QStringList>
 
+#include "usbkiller.h"
 #include "videoplayer.h"
 
 
@@ -48,6 +49,7 @@ void VideoPlayer::play(QString url) {
     );
 
     _playing = true;
+    UsbKiller::getInstance()->play();
     emit playingChanged(_playing);
 
     mpv->start("/usr/bin/mpv", params, nullptr);
@@ -58,6 +60,7 @@ void VideoPlayer::finished(int exit_code, QProcess::ExitStatus status) {
     emit playingChanged(_playing);
     delete mpv;
     mpv = nullptr;
+    UsbKiller::getInstance()->stop();
 }
 
 bool VideoPlayer::playing() {
