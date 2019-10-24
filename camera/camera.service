@@ -11,3 +11,5 @@ ExecStart=/home/salvo/siddio/camera/app.py
 Restart=always
 User=pi
 ProtectSystem=full
+RestartSec=120
+Restart=always
