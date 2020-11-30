@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with siddio. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+Copyright (C) 2018-2020  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 import QtQuick 2.7
 
@@ -63,7 +63,7 @@ Item {
 
             http.onreadystatechange = function() { // Call a function when the state changes.
                 if (http.readyState === XMLHttpRequest.DONE) {
-                    if (http.status == 200) {
+                    if (http.status === 200) {
                         var response = JSON.parse(http.responseText)
                         _token = response['access_token']
 
@@ -93,8 +93,8 @@ Item {
 
         http.onreadystatechange = function() { // Call a function when the state changes.
             items.clear()
-            if (http.readyState == XMLHttpRequest.DONE) {
-                if (http.status == 200) {
+            if (http.readyState === XMLHttpRequest.DONE) {
+                if (http.status === 200) {
                     var data = JSON.parse(http.responseText)['DepartureBoard']
 
                     var _servertime = data['servertime'].split(':')
@@ -173,8 +173,8 @@ Item {
         http.setRequestHeader('Authorization', 'Bearer ' + _token)
 
         http.onreadystatechange = function() { // Call a function when the state changes.
-            if (http.readyState == XMLHttpRequest.DONE) {
-                if (http.status == 200) {
+            if (http.readyState === XMLHttpRequest.DONE) {
+                if (http.status === 200) {
                     var data = JSON.parse(http.responseText)['LocationList']['StopLocation'][0]
                     stop_id = data.id
                     name = data.name
