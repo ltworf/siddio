@@ -20,8 +20,8 @@ import QtQuick 2.7
 
 Item {
     property string api_key
-    property string stop
-    property string name //proper name of the stop, from the API
+    property string stop //Name of the stop from the settings
+    property string name: '' //human readable name of the stop, from the API
     property string track_filter: ''
     property string stop_id: ''
     property int update_interval: 30
@@ -33,12 +33,14 @@ Item {
     property string server_stop
     property var items: items
     property string _token
+    property var _token_expires: 0
 
     ListModel {
         id: items
     }
 
     Timer {
+        id: update_timer
         triggeredOnStart: true
         interval: 1000 * update_interval
         running: enabled && stop_id.length > 0
@@ -46,33 +48,31 @@ Item {
         onTriggered: update_stop()
     }
 
-    Timer {
-        id: token_timer
-        triggeredOnStart: true
-        repeat: true
-        interval: 1000 * 60 * 9 // 9 minutes
-        running: api_key.length > 0
-        onTriggered: {
-            console.log('[BusStop] Getting new token...')
-            var http = new XMLHttpRequest()
-            var url = 'https://api.vasttrafik.se:443/token'
-            http.open('POST', url)
-            http.setRequestHeader('Authorization', 'Basic ' + api_key)
-            http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-            http.send('grant_type=client_credentials')
+    onStopChanged: {stop_id = ''; update_stop() }
+    onTrack_filterChanged: update_stop()
 
-            http.onreadystatechange = function() { // Call a function when the state changes.
-                if (http.readyState === XMLHttpRequest.DONE) {
-                    if (http.status === 200) {
-                        var response = JSON.parse(http.responseText)
-                        _token = response['access_token']
+    function get_token() {
+        console.log('[BusStop] Getting new token...')
+        var http = new XMLHttpRequest()
+        var url = 'https://api.vasttrafik.se:443/token'
+        http.open('POST', url)
+        http.setRequestHeader('Authorization', 'Basic ' + api_key)
+        http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        http.send('grant_type=client_credentials')
 
-                        // Adjust interval accordingly to token expiration
-                        token_timer.interval = response['expires_in'] > 120 ? (response['expires_in'] - 60) * 1000 : 1
-                        console.log('[BusStop] Get new token in ' + token_timer.interval + 'ms')
-                    } else {
-                        console.log('[BusStop] obtaining token error: ' + http.status + http.responseText)
-                    }
+        http.onreadystatechange = function() { // Call a function when the state changes.
+            if (http.readyState === XMLHttpRequest.DONE) {
+                if (http.status === 200) {
+                    var response = JSON.parse(http.responseText)
+                    _token = response['access_token']
+
+                    // Adjust interval accordingly to token expiration
+                    _token_expires = Date.now() + (response['expires_in'] * 1000)
+                    console.log('[BusStop] Get new token in ' + response['expires_in'] + 's')
+                    update_stop()
+                } else {
+                    console.log('[BusStop] obtaining token error: ' + http.status + http.responseText)
+                    items.clear()
                 }
             }
         }
@@ -80,6 +80,17 @@ Item {
 
     function update_stop() {
         console.log('[BusStop] update board')
+        if (Date.now() > _token_expires) {
+            console.log('[BusStop] Need to fetch token, because:', Date.now(), _token_expires)
+            get_token()
+            return
+        }
+
+        if (stop_id === '' || name === '') {
+            find_stop_id()
+            return
+        }
+
         if (stop_id.length == 0) {
             items.clear()
             return
@@ -152,20 +163,15 @@ Item {
 
                 } else {
                     console.log('[BusStop] update board error: ' + http.status)
+                    items.clear()
                 }
             }
         }
         http.send();
     }
 
-    onStopChanged: fetch_again()
-    on_TokenChanged: fetch_again()
-    onTrack_filterChanged: update_stop()
-    onStop_idChanged: update_stop()
-
-    function fetch_again() {
-        if (stop.length == 0 || _token.length == 0)
-            return
+    function find_stop_id() {
+        console.log('[BusStop] Fetching stop id for:', stop)
         var http = new XMLHttpRequest()
         http.responseType = 'arraybuffer';
         var url = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?format=json&input=" + stop
@@ -178,6 +184,7 @@ Item {
                     var data = JSON.parse(http.responseText)['LocationList']['StopLocation'][0]
                     stop_id = data.id
                     name = data.name
+                    update_stop()
                 } else {
                     console.log('[BusStop] location error: ' + http.status)
                 }
