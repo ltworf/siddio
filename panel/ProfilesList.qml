@@ -59,8 +59,8 @@ GridView {
         font.pointSize: fontsize
     }
 
-    cellWidth: 138
-    cellHeight: 138
+    cellWidth: 110
+    cellHeight: 110
     delegate: Button {
         text: name
         font.pointSize: fontsize * 0.4
@@ -68,11 +68,14 @@ GridView {
 //            color: 'yellow'
 //            border.color: 'red'
             Image {
+                asynchronous: true
+                width: 105
+                height: 105
                 source: 'qrc:/icons/profiles/' + name + '.png'
             }
         }
-        width: 128
-        height: 128
+        width: 105
+        height: 105
         onClicked: {
             homecontrol.activate(name)
         }
