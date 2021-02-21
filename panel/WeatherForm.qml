@@ -30,6 +30,7 @@ Item {
     }
 
     Image {
+        asynchronous: true
         anchors.top: parent.top
         anchors.left: windunit.right
         id: image1
