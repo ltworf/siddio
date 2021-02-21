@@ -20,6 +20,7 @@ signals:
 
 public slots:
     void activate(QString profile);
+    bool isActive(QString profile);
     void setPort(uint16_t);
     uint16_t port();
     void setHost(QString);

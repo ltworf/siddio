@@ -40,6 +40,34 @@ void HomeControlClient::activate(QString profile) {
     sock.close();
 }
 
+bool HomeControlClient::isActive(QString profile) {
+    QByteArray buffer;
+    QTcpSocket sock;
+    buffer.append('s');
+    buffer.append(profile.toUtf8());
+    sock.connectToHost(this->m_host, this->m_port);
+    sock.waitForConnected();
+    sock.write(buffer);
+    sock.waitForBytesWritten();
+
+    buffer.clear();
+
+    while (sock.waitForReadyRead()) {
+        QByteArray b = sock.readAll();
+        qDebug() << "data" << b;
+        if (b.length() == 0)
+            break;
+        buffer.append(b);
+    }
+
+
+    sock.close();
+    QString str_buffer = QString::fromUtf8(buffer);
+    if (str_buffer == "true")
+        return true;
+    return false;
+}
+
 QStringList HomeControlClient::profiles() {
     QByteArray buffer;
     QTcpSocket sock;
