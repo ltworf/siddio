@@ -16,7 +16,11 @@ if test -z "$1" || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
 fi
 
 while test -n "$1"; do
-    if test "$1" = "--list"; then
+    if test "$1" = "--status"; then
+        printf "s$2" | nc $HOST $PORT
+        echo
+        exit 0
+    elif test "$1" = "--list"; then
         printf l | nc $HOST $PORT
         echo
         exit 0

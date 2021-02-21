@@ -7,7 +7,7 @@ _setprofile_tab_complete () {
     cur="${COMP_WORDS[COMP_CWORD]}"
     #prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-    words="--list $(setprofile --list)"
+    words="--list --status $(setprofile --list)"
 
     COMPREPLY=( $(compgen -W "${words}" -- ${cur}) )
     return 0
