@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # Siddio
-# Copyright (C) 2017 Salvo "LtWorf" Tomaselli
+# Copyright (C) 2017-2021 Salvo "LtWorf" Tomaselli
 #
 # Siddio is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ from homecontrol import profiles
 
 PROFILE_ACTIVATE = b'a'
 PROFILE_LIST = b'l'
+PROFILE_STATUS = b's'
 
 
 class AsyncConnection(asyncore.dispatcher_with_send):
@@ -52,6 +53,14 @@ class AsyncConnection(asyncore.dispatcher_with_send):
         elif command == PROFILE_LIST:
             pnames = (pname.encode('utf8') for pname in profiles.get_profiles())
             self.send(b'\n'.join(pnames))
+        elif command == PROFILE_STATUS:
+            pname = self.recv(1024).decode('utf8')
+            profile = profiles.get_profile(pname)
+            if not profile:
+                syslog(LOG_NOTICE, 'Profile %s does not exist' % pname)
+            else:
+                syslog(LOG_INFO, 'Checking status on profile: %s' % pname)
+                self.send(b'true' if profile.is_active() else b'false')
         else:
             syslog(LOG_ERR, '%s invalid command: 0x%s' % (self.logid, command.hex()))
         self.close()
