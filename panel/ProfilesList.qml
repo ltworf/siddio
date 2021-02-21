@@ -37,21 +37,23 @@ GridView {
         onPortChanged: timer.restart()
     }
 
+    function update (){
+        var profiles = homecontrol.profiles()
+        list_model.clear()
+        for (var i = 0; i < profiles.length; i++) {
+            if (! homecontrol.isActive(profiles[i])) {
+                list_model.append({'name': profiles[i]});
+            }
+        }
+    }
+
     Timer {
         id: timer
         interval: 1000 * 60 * 10 //10 minutes
         repeat: true
         triggeredOnStart: true
         running: true
-        onTriggered: {
-            var profiles = homecontrol.profiles()
-            console.debug('Reloading profiles')
-            list_model.clear()
-
-            for (var i = 0; i < profiles.length; i++) {
-                list_model.append({'name': profiles[i]})
-            }
-        }
+        onTriggered: update()
     }
 
     header: Label {
@@ -77,7 +79,8 @@ GridView {
         width: 105
         height: 105
         onClicked: {
-            homecontrol.activate(name)
+            homecontrol.activate(name);
+            timer.triggered()
         }
     }
 }
