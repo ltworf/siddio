@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with siddio. If not, see <http://www.gnu.org/licenses/>.
 
-Copyright (C) 2018-2019  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
+Copyright (C) 2018-2021  Salvo "LtWorf" Tomaselli <tiposchi@tiscali.it>
 */
 
 import QtQuick 2.0
@@ -169,7 +169,7 @@ Item {
                     }
                 }
                 Button {
-                    property string url: 'http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk'
+                    property string url: 'http://wsdownload.bbc.co.uk/worldservice/meta/live/shoutcast/mp3/eieuk.pls'
                     highlighted: url == player.url
                     Layout.fillWidth: true
                     text: 'BBC World Service'
