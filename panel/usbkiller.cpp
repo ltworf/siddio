@@ -36,6 +36,7 @@ void UsbKiller::act() {
     params << "/usr/sbin/uhubctl";
     params << "-p" << "2";
     params << "-a";
+    params << "-l" << "1-1";
 
     if (this->users)
         params << "on";
