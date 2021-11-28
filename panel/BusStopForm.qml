@@ -47,7 +47,7 @@ ListView {
             anchors.left: parent.left
             anchors.top: parent.top
             id: rect_name
-            color: fgColor
+            color: bgColor
             height: squaresize
             width: height * 1.1
             Text {
@@ -55,7 +55,7 @@ ListView {
                 horizontalAlignment: Text.AlignHCenter
                 anchors.fill: parent
                 id: lbl_name
-                color: bgColor
+                color: fgColor
                 text: sname
                 fontSizeMode: Text.HorizontalFit
                 font.pointSize: fontsize
