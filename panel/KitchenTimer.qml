@@ -67,7 +67,6 @@ ColumnLayout {
         }
 
         Label {
-            Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             text: ktimer.formatted
             clip: true
