@@ -68,6 +68,8 @@ ColumnLayout {
     RowLayout {
         Layout.preferredWidth: parent.width
 
+        visible: ! t.running
+
         Button {
             text: "+1"
             font.pointSize: ktimer.fontsize * 0.8
