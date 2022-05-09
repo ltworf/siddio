@@ -56,13 +56,25 @@ ColumnLayout {
         repeat: true
     }
 
-
-    Label {
+    RowLayout {
         Layout.preferredWidth: parent.width
-        horizontalAlignment: Text.AlignHCenter
-        text: ktimer.formatted
-        clip: true
-        font.pointSize: ktimer.fontsize
+        Label {
+            Layout.fillWidth: true
+            horizontalAlignment: Text.AlignHCenter
+            text: ktimer.formatted
+            clip: true
+            font.pointSize: ktimer.fontsize
+        }
+
+        Button {
+            text: "✋"
+            font.pointSize: ktimer.fontsize * 0.5
+            enabled: ktimer.seconds > 0
+            onClicked: {
+                t.stop()
+                ktimer.seconds = 0
+            }
+        }
     }
 
     RowLayout {
@@ -95,19 +107,10 @@ ColumnLayout {
 
         Button {
             text: "Start"
+            id: start_btn
             font.pointSize: ktimer.fontsize * 0.5
             onClicked: t.start()
             enabled: ktimer.seconds > 0 && ! t.running
-        }
-
-        Button {
-            text: "Reset"
-            font.pointSize: ktimer.fontsize * 0.5
-            enabled: ktimer.seconds > 0
-            onClicked: {
-                t.stop()
-                ktimer.seconds = 0
-            }
         }
     }
 }
