@@ -40,6 +40,7 @@ HEADERS += \
     homecontrolclient.h \
     audioplayer.h \
     metadata.h \
+    mpv/qthelper.hpp \
     pibacklight.h \
     usbkiller.h \
     videoplayer.h
