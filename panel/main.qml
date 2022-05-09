@@ -96,10 +96,11 @@ ApplicationWindow {
 
         RowLayout {
             ColumnLayout {
-                KitchenTimer {id: kitchen1; }
-                KitchenTimer {id: kitchen2; }
-                KitchenTimer {id: kitchen3; visible: kitchen1.compact && kitchen2.compact}
-                KitchenTimer {id: kitchen4; visible: kitchen1.compact && kitchen2.compact && kitchen3.compact}
+                Layout.preferredHeight: parent.height
+                KitchenTimer {id: kitchen1; visible: compact || ((kitchen4.compact + kitchen2.compact + kitchen3.compact) >= 2) ||  ((kitchen4.compact + kitchen2.compact + kitchen3.compact) < 2)}
+                KitchenTimer {id: kitchen2; visible: compact || ((kitchen4.compact + kitchen3.compact + kitchen1.compact) >= 2) ||  ((kitchen4.compact + kitchen1.compact + kitchen3.compact) < 2)}
+                KitchenTimer {id: kitchen3; visible: compact || ((kitchen4.compact + kitchen2.compact + kitchen1.compact) >= 2) }
+                KitchenTimer {id: kitchen4; visible: compact || ((kitchen3.compact + kitchen2.compact + kitchen1.compact) == 3) }
             }
 
             OffTimer{
