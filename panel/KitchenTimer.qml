@@ -134,6 +134,13 @@ ColumnLayout {
             onClicked: start_food(600, text)
             enabled: ktimer.seconds == 0
         }
+
+        Button {
+            text: "🥚"
+            font.pointSize: ktimer.fontsize * 0.5
+            onClicked: start_food(180, text)
+            enabled: ktimer.seconds == 0
+        }
     }
 
     function start_food(duration, text) {
