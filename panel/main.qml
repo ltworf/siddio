@@ -96,8 +96,10 @@ ApplicationWindow {
 
         RowLayout {
             ColumnLayout {
-                KitchenTimer {}
-                KitchenTimer {}
+                KitchenTimer {id: kitchen1; }
+                KitchenTimer {id: kitchen2; }
+                KitchenTimer {id: kitchen3; visible: kitchen1.compact && kitchen2.compact}
+                KitchenTimer {id: kitchen4; visible: kitchen1.compact && kitchen2.compact && kitchen3.compact}
             }
 
             OffTimer{

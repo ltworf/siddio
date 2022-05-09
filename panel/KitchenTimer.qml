@@ -26,6 +26,7 @@ ColumnLayout {
     property int seconds: 0
     property string formatted: "00:00"
     property int fontsize: 50
+    property bool compact: t.running
     id: ktimer
 
     onSecondsChanged: {
