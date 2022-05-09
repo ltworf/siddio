@@ -58,6 +58,14 @@ ColumnLayout {
 
     RowLayout {
         Layout.preferredWidth: parent.width
+
+        Label {
+            id: iconlbl
+            text: ""
+            Layout.preferredWidth: height
+            font.pointSize: ktimer.fontsize
+        }
+
         Label {
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
@@ -73,6 +81,7 @@ ColumnLayout {
             onClicked: {
                 t.stop()
                 ktimer.seconds = 0
+                iconlbl.text = ""
             }
         }
     }
@@ -103,14 +112,28 @@ ColumnLayout {
 
     RowLayout {
         Layout.preferredWidth: parent.width
+        visible: ! t.running
         spacing: 6
 
         Button {
             text: "Start"
-            id: start_btn
             font.pointSize: ktimer.fontsize * 0.5
-            onClicked: t.start()
+            onClicked: {t.start(); iconlbl.text = ""}
             enabled: ktimer.seconds > 0 && ! t.running
+        }
+
+        Button {
+            text: "🥖"
+            font.pointSize: ktimer.fontsize * 0.5
+            onClicked: {ktimer.seconds = 780; t.start(); iconlbl.text = text}
+            enabled: ktimer.seconds == 0
+        }
+
+        Button {
+            text: "🍝"
+            font.pointSize: ktimer.fontsize * 0.5
+            onClicked: {ktimer.seconds = 600; t.start(); iconlbl.text = text}
+            enabled: ktimer.seconds == 0
         }
     }
 }
