@@ -99,13 +99,6 @@ ColumnLayout {
         }
 
         Button {
-            text: "Pause"
-            font.pointSize: ktimer.fontsize * 0.5
-            onClicked: t.stop()
-            enabled: ktimer.seconds > 0 && t.running
-        }
-
-        Button {
             text: "Reset"
             font.pointSize: ktimer.fontsize * 0.5
             enabled: ktimer.seconds > 0
