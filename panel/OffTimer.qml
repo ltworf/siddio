@@ -70,9 +70,16 @@ ColumnLayout {
         font.pointSize: fontsize
     }
 
-    Button {
-        text: "+10"
-        font.pointSize: fontsize * 0.8
-        onClicked: seconds += 60 * 10
+    RowLayout {
+        Button {
+            text: "+10"
+            font.pointSize: fontsize * 0.8
+            onClicked: seconds += 60 * 10
+        }
+        Button {
+            text: "+1h"
+            font.pointSize: fontsize * 0.8
+            onClicked: seconds += 60 * 60
+        }
     }
 }
