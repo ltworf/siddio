@@ -94,21 +94,7 @@ ApplicationWindow {
             port: settings.port
         }
 
-        RowLayout {
-            ColumnLayout {
-                Layout.preferredHeight: parent.height
-                KitchenTimer {id: kitchen1; visible: compact || ((kitchen4.compact + kitchen2.compact + kitchen3.compact) >= 2) ||  ((kitchen4.compact + kitchen2.compact + kitchen3.compact) < 2)}
-                KitchenTimer {id: kitchen2; visible: compact || ((kitchen4.compact + kitchen3.compact + kitchen1.compact) >= 2) ||  ((kitchen4.compact + kitchen1.compact + kitchen3.compact) < 2)}
-                KitchenTimer {id: kitchen3; visible: compact || ((kitchen4.compact + kitchen2.compact + kitchen1.compact) >= 2) }
-                KitchenTimer {id: kitchen4; visible: compact || ((kitchen3.compact + kitchen2.compact + kitchen1.compact) == 3) }
-            }
-
-            OffTimer{
-                host: settings.host
-                port: settings.port
-                radio: radio
-            }
-        }
+        TabTimer {radio: radio}
 
         Stats {}
 
