@@ -94,18 +94,7 @@ ApplicationWindow {
             port: settings.port
         }
 
-        RowLayout {
-            ColumnLayout {
-                KitchenTimer {}
-                KitchenTimer {}
-            }
-
-            OffTimer{
-                host: settings.host
-                port: settings.port
-                radio: radio
-            }
-        }
+        TabTimer {radio: radio}
 
         Stats {}
 

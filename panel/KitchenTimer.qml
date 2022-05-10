@@ -26,6 +26,7 @@ ColumnLayout {
     property int seconds: 0
     property string formatted: "00:00"
     property int fontsize: 50
+    property bool compact: t.running
     id: ktimer
 
     onSecondsChanged: {
@@ -56,17 +57,39 @@ ColumnLayout {
         repeat: true
     }
 
-
-    Label {
+    RowLayout {
         Layout.preferredWidth: parent.width
-        horizontalAlignment: Text.AlignHCenter
-        text: ktimer.formatted
-        clip: true
-        font.pointSize: ktimer.fontsize
+
+        Label {
+            id: iconlbl
+            text: ""
+            Layout.preferredWidth: height
+            font.pointSize: ktimer.fontsize
+        }
+
+        Label {
+            horizontalAlignment: Text.AlignHCenter
+            text: ktimer.formatted
+            clip: true
+            font.pointSize: ktimer.fontsize
+        }
+
+        Button {
+            text: "✋"
+            font.pointSize: ktimer.fontsize * 0.5
+            enabled: ktimer.seconds > 0
+            onClicked: {
+                t.stop()
+                ktimer.seconds = 0
+                iconlbl.text = ""
+            }
+        }
     }
 
     RowLayout {
         Layout.preferredWidth: parent.width
+
+        visible: ! t.running
 
         Button {
             text: "+1"
@@ -89,30 +112,41 @@ ColumnLayout {
 
     RowLayout {
         Layout.preferredWidth: parent.width
+        visible: ! t.running
         spacing: 6
 
         Button {
             text: "Start"
             font.pointSize: ktimer.fontsize * 0.5
-            onClicked: t.start()
+            onClicked: {t.start(); iconlbl.text = ""}
             enabled: ktimer.seconds > 0 && ! t.running
         }
 
         Button {
-            text: "Pause"
+            text: "🥖"
             font.pointSize: ktimer.fontsize * 0.5
-            onClicked: t.stop()
-            enabled: ktimer.seconds > 0 && t.running
+            onClicked: start_food(780, text)
+            enabled: ktimer.seconds == 0
         }
 
         Button {
-            text: "Reset"
+            text: "🍝"
             font.pointSize: ktimer.fontsize * 0.5
-            enabled: ktimer.seconds > 0
-            onClicked: {
-                t.stop()
-                ktimer.seconds = 0
-            }
+            onClicked: start_food(600, text)
+            enabled: ktimer.seconds == 0
         }
+
+        Button {
+            text: "🥚"
+            font.pointSize: ktimer.fontsize * 0.5
+            onClicked: start_food(180, text)
+            enabled: ktimer.seconds == 0
+        }
+    }
+
+    function start_food(duration, text) {
+        ktimer.seconds = duration
+        t.start()
+        iconlbl.text = text
     }
 }

@@ -78,5 +78,6 @@
         <file>icons/11.png</file>
         <file>icons/12.png</file>
         <file>icons/weather-none-available.png</file>
+        <file>TabTimer.qml</file>
     </qresource>
 </RCC>
