@@ -19,7 +19,6 @@ import collections
 import socket
 import struct
 from syslog import *
-from typing import List
 
 SETSTATE = b's'
 GETSTATE = b'g'
@@ -85,7 +84,7 @@ class Device(collections.namedtuple('device', ('name', 'description', 'tags', 'h
         s.close()
 
 
-def _devices(host: str, port: int) -> List[Device]:
+def _devices(host: str, port: int) -> list[Device]:
     r = []
     try:
         s = socket.socket(socket.AF_INET)
