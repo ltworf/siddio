@@ -22,7 +22,7 @@ Description: siddio is a distributed home automation project
 
 Package: siddio-homecontrol
 Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}, python3-relational, python3-configobj, systemd (>= 232),
+Depends: ${misc:Depends}, ${python3:Depends}, python3-relational (>= 3), python3-configobj, systemd (>= 232),
  python3-setproctitle
 Description: siddio is a distributed home automation project
  .
