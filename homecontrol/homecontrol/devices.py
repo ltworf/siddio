@@ -108,7 +108,7 @@ def _devices(host: str, port: int) -> list[Device]:
             r.append(Device(name, descr, tags_set, host, port, dev_id))
         s.close()
     except Exception as e:
-        syslog(LOG_WARNING, 'Connection problem with %s:%d %e' % (host, port, e)
+        syslog(LOG_WARNING, 'Connection problem with %s:%d %e' % (host, port, e))
     return r
 
 
