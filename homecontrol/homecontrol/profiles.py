@@ -78,17 +78,16 @@ def get_relations():
     properties = get_relations.properties
 
     # Set the properties that devices have
-    dev_rel = Relation()
-    dev_rel.header = Header(properties)
 
     dev_dic = {}
 
     # Add the devices inside the relation
+    content = set()
     for dev in devs:
         # Create the tuple for the device
-        dev_dic[str(id(dev))] = dev
+        dev_dic[id(dev)] = dev
         attrs = []
-        for prop in dev_rel.header:
+        for prop in properties:
             if prop == 'tags':
                 continue
             elif prop == 'state':
@@ -99,16 +98,16 @@ def get_relations():
                 attrs.append(getattr(dev, prop))
             else:
                 attrs.append(dev.properties.get(prop, ''))
-        dev_rel.insert(attrs)
+        content.add(tuple(attrs))
+    dev_rel = Relation(Header(properties), content)
 
-    tag_rel = Relation()
-    tag_rel.header = Header(('id', 'tag'))
-
+    tag_content = set()
     for dev in devs:
         for tag in dev.tags:
             if ':' in tag:
                 continue
-            tag_rel.insert((id(dev), tag))
+            tag_content.add((id(dev), tag))
+    tag_rel = Relation(Header(('id', 'tag')), tag_content)
 
     return dev_rel, tag_rel, dev_dic
 
